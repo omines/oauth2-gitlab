@@ -117,7 +117,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
     {
         $userId = rand(1000, 9999);
         $name = uniqid();
-        $nickname = uniqid();
+        $username = uniqid();
         $email = uniqid();
 
         $postResponse = m::mock('Psr\Http\Message\ResponseInterface');
@@ -126,7 +126,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $postResponse->shouldReceive('getStatusCode')->andReturn(200);
 
         $userResponse = m::mock('Psr\Http\Message\ResponseInterface');
-        $userResponse->shouldReceive('getBody')->andReturn('{"id": ' . $userId . ', "login": "' . $nickname . '", "name": "' . $name . '", "email": "' . $email . '"}');
+        $userResponse->shouldReceive('getBody')->andReturn('{"id": ' . $userId . ', "username": "' . $username . '", "name": "' . $name . '", "email": "' . $email . '"}');
         $userResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
         $userResponse->shouldReceive('getStatusCode')->andReturn(200);
 
@@ -143,11 +143,10 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($userId, $user->toArray()['id']);
         $this->assertEquals($name, $user->getName());
         $this->assertEquals($name, $user->toArray()['name']);
-        $this->assertEquals($nickname, $user->getNickname());
-        $this->assertEquals($nickname, $user->toArray()['login']);
+        $this->assertEquals($username, $user->getUsername());
+        $this->assertEquals($username, $user->toArray()['username']);
         $this->assertEquals($email, $user->getEmail());
         $this->assertEquals($email, $user->toArray()['email']);
-        $this->assertContains($nickname, $user->getUrl());
     }
 
     public function testUserEmails()

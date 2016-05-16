@@ -53,10 +53,12 @@ class GitlabResourceOwner implements ResourceOwnerInterface
 
     /**
      * @param string $domain
+     * @return $this
      */
     public function setDomain($domain)
     {
         $this->domain = $domain;
+        return $this;
     }
 
     /**
@@ -79,11 +81,31 @@ class GitlabResourceOwner implements ResourceOwnerInterface
         return $this->get('username');
     }
 
+    /**
+     * Email address of the owner.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->get('email');
+    }
+
+    /**
+     * URL to the user's avatar.
+     *
+     * @return string|null
+     */
     public function getAvatarUrl()
     {
         return $this->get('avatar_url');
     }
 
+    /**
+     * URL to the user's profile page.
+     *
+     * @return string
+     */
     public function getProfileUrl()
     {
         return $this->get('web_url');

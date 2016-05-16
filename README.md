@@ -58,7 +58,7 @@ if (!isset($_GET['code'])) {
         $user = $provider->getResourceOwner($token);
 
         // Use these details to create a new profile
-        printf('Hello %s!', $user->getNickname());
+        printf('Hello %s!', $user->getName());
 
     } catch (Exception $e) {
 
