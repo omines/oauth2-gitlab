@@ -19,19 +19,9 @@ use League\OAuth2\Client\Provider\ResourceOwnerInterface;
  */
 class GitlabResourceOwner implements ResourceOwnerInterface
 {
-    /**
-     * Domain.
-     *
-     * @var string
-     */
-    protected $domain;
+    private $data;
 
-    /**
-     * Raw response.
-     *
-     * @var array
-     */
-    protected $response;
+    private $domain;
 
     /**
      * Creates new resource owner.
@@ -40,71 +30,93 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function __construct(array $response = [])
     {
-        $this->response = $response;
+        $this->data = $response;
     }
 
     /**
-     * Get resource owner id.
+     * Returns the identifier of the authorized resource owner.
      *
-     * @return string|null
+     * @return int
      */
     public function getId()
     {
-        return $this->response['id'] ?: null;
+        return (int) $this->get('id');
     }
 
     /**
-     * Get resource owner email.
-     *
-     * @return string|null
+     * @return string
      */
-    public function getEmail()
+    public function getDomain()
     {
-        return $this->response['email'] ?: null;
+        return $this->domain;
     }
 
     /**
-     * Get resource owner name.
-     *
-     * @return string|null
-     */
-    public function getName()
-    {
-        return $this->response['name'] ?: null;
-    }
-
-    /**
-     * Get resource owner nickname.
-     *
-     * @return string|null
-     */
-    public function getNickname()
-    {
-        return $this->response['login'] ?: null;
-    }
-
-    /**
-     * Get resource owner url.
-     *
-     * @return string|null
-     */
-    public function getUrl()
-    {
-        return trim($this->domain . '/' . $this->getNickname()) ?: null;
-    }
-
-    /**
-     * Set resource owner domain.
-     *
      * @param string $domain
-     *
-     * @return ResourceOwner
      */
     public function setDomain($domain)
     {
         $this->domain = $domain;
+    }
 
-        return $this;
+    /**
+     * The full name of the owner.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->get('name');
+    }
+
+    /**
+     * Username of the owner.
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->get('username');
+    }
+
+    public function getAvatarUrl()
+    {
+        return $this->get('avatar_url');
+    }
+
+    public function getProfileUrl()
+    {
+        return $this->get('web_url');
+    }
+
+    /**
+     * Whether the user is active.
+     *
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->get('state') === 'active';
+    }
+
+    /**
+     * Whether the user is an admin.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return (bool) $this->get('is_admin', false);
+    }
+
+    /**
+     * Whether the user is external.
+     *
+     * @return bool
+     */
+    public function isExternal()
+    {
+        return (bool) $this->get('external', true);
     }
 
     /**
@@ -114,6 +126,16 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function toArray()
     {
-        return $this->response;
+        return $this->data;
+    }
+
+    /**
+     * @param  string     $key
+     * @param  mixed|null $default
+     * @return mixed|null
+     */
+    protected function get($key, $default = null)
+    {
+        return isset($this->data[$key]) ? $this->data[$key] : $default;
     }
 }
