@@ -70,7 +70,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $url = $this->provider->getBaseAccessTokenUrl($params);
         $uri = parse_url($url);
 
-        $this->assertEquals('/oauth/access_token', $uri['path']);
+        $this->assertEquals('/oauth/token', $uri['path']);
     }
 
     public function testGetAccessToken()
@@ -92,9 +92,9 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($token->getResourceOwnerId());
     }
 
-    public function testGithubEnterpriseDomainUrls()
+    public function testSelfHostedGitlabDomainUrls()
     {
-        $this->provider->domain = 'https://github.company.com';
+        $this->provider->domain = 'https://gitlab.company.com';
 
         $response = m::mock('Psr\Http\Message\ResponseInterface');
         $response->shouldReceive('getBody')->times(1)->andReturn('access_token=mock_access_token&expires=3600&refresh_token=mock_refresh_token&otherKey={1234}');
@@ -108,7 +108,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
 
         $this->assertEquals($this->provider->domain . '/oauth/authorize', $this->provider->getBaseAuthorizationUrl());
-        $this->assertEquals($this->provider->domain . '/oauth/access_token', $this->provider->getBaseAccessTokenUrl([]));
+        $this->assertEquals($this->provider->domain . '/oauth/token', $this->provider->getBaseAccessTokenUrl([]));
         $this->assertEquals($this->provider->domain . '/api/v3/user', $this->provider->getResourceOwnerDetailsUrl($token));
         //$this->assertEquals($this->provider->domain.'/api/v3/user/emails', $this->provider->urlUserEmails($token));
     }

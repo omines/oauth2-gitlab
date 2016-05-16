@@ -66,7 +66,7 @@ class Gitlab extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-        return $this->domain . '/oauth/access_token';
+        return $this->domain . '/oauth/token';
     }
 
     /**

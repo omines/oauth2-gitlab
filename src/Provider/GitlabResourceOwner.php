@@ -52,7 +52,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * @param string $domain
+     * @param  string $domain
      * @return $this
      */
     public function setDomain($domain)
