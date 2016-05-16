@@ -11,6 +11,7 @@
 namespace Omines\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Provider\AbstractProvider;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Omines\OAuth2\Client\Provider\Exception\GitlabIdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
@@ -30,14 +31,21 @@ class Gitlab extends AbstractProvider
      *
      * @var string
      */
-    public $domain = 'https://github.com';
+    public $domain = 'https://gitlab.com';
 
     /**
-     * Api domain.
+     * Gitlab constructor.
      *
-     * @var string
+     * @param array $options
+     * @param array $collaborators
      */
-    public $apiDomain = 'https://api.github.com';
+    public function __construct(array $options, array $collaborators = [])
+    {
+        if (isset($options['domain'])) {
+            $this->domain = $options['domain'];
+        }
+        parent::__construct($options, $collaborators);
+    }
 
     /**
      * Get authorization url to begin OAuth flow.
@@ -46,7 +54,7 @@ class Gitlab extends AbstractProvider
      */
     public function getBaseAuthorizationUrl()
     {
-        return $this->domain . '/login/oauth/authorize';
+        return $this->domain . '/oauth/authorize';
     }
 
     /**
@@ -58,7 +66,7 @@ class Gitlab extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-        return $this->domain . '/login/oauth/access_token';
+        return $this->domain . '/oauth/access_token';
     }
 
     /**
@@ -70,9 +78,6 @@ class Gitlab extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        if ($this->domain === 'https://github.com') {
-            return $this->apiDomain . '/user';
-        }
         return $this->domain . '/api/v3/user';
     }
 
@@ -92,8 +97,6 @@ class Gitlab extends AbstractProvider
     /**
      * Check a provider response for errors.
      *
-     * @link   https://developer.github.com/v3/#client-errors
-     * @link   https://developer.github.com/v3/oauth/#common-errors-for-the-access-token-request
      * @throws IdentityProviderException
      * @param  ResponseInterface         $response
      * @param  string                    $data     Parsed response data
@@ -110,9 +113,9 @@ class Gitlab extends AbstractProvider
     /**
      * Generate a user object from a successful user details request.
      *
-     * @param  array                                                $response
-     * @param  AccessToken                                          $token
-     * @return League\OAuth2\Client\Provider\ResourceOwnerInterface
+     * @param  array                                                 $response
+     * @param  AccessToken                                           $token
+     * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     protected function createResourceOwner(array $response, AccessToken $token)
     {

@@ -12,6 +12,11 @@ namespace Omines\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 
+/**
+ * GitlabResourceOwner.
+ *
+ * @author Niels Keurentjes <niels.keurentjes@omines.com>
+ */
 class GitlabResourceOwner implements ResourceOwnerInterface
 {
     /**

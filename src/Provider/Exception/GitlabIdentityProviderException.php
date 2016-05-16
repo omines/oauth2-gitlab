@@ -13,6 +13,11 @@ namespace Omines\OAuth2\Client\Provider\Exception;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * GitlabIdentityProviderException.
+ *
+ * @author Niels Keurentjes <niels.keurentjes@omines.com>
+ */
 class GitlabIdentityProviderException extends IdentityProviderException
 {
     /**

@@ -18,7 +18,7 @@ composer require omines/oauth2-gitlab
 
 ## Usage
 
-Usage is similar to the basic OAuth client, using `\Omines\OAuth2\Client\Provider\Github` as the provider.
+Usage is similar to the basic OAuth client, using `\Omines\OAuth2\Client\Provider\Gitlab` as the provider.
 
 ### Authorization Code Flow
 
@@ -27,6 +27,7 @@ $provider = new Omines\OAuth2\Client\Provider\Gitlab([
     'clientId'          => '{github-client-id}',
     'clientSecret'      => '{github-client-secret}',
     'redirectUri'       => 'https://example.com/callback-url',
+    'domain'            => 'https://my.gitlab.example',      // Optional base URL for self-hosted
 ]);
 
 if (!isset($_GET['code'])) {
