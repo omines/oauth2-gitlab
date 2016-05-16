@@ -24,8 +24,8 @@ Usage is similar to the basic OAuth client, using `\Omines\OAuth2\Client\Provide
 
 ```php
 $provider = new Omines\OAuth2\Client\Provider\Gitlab([
-    'clientId'          => '{github-client-id}',
-    'clientSecret'      => '{github-client-secret}',
+    'clientId'          => '{gitlab-client-id}',
+    'clientSecret'      => '{gitlab-client-secret}',
     'redirectUri'       => 'https://example.com/callback-url',
     'domain'            => 'https://my.gitlab.example',      // Optional base URL for self-hosted
 ]);

@@ -60,7 +60,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $url = $this->provider->getAuthorizationUrl();
         $uri = parse_url($url);
 
-        $this->assertEquals('/login/oauth/authorize', $uri['path']);
+        $this->assertEquals('/oauth/authorize', $uri['path']);
     }
 
     public function testGetBaseAccessTokenUrl()
@@ -70,7 +70,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $url = $this->provider->getBaseAccessTokenUrl($params);
         $uri = parse_url($url);
 
-        $this->assertEquals('/login/oauth/access_token', $uri['path']);
+        $this->assertEquals('/oauth/access_token', $uri['path']);
     }
 
     public function testGetAccessToken()
@@ -107,8 +107,8 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
 
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
 
-        $this->assertEquals($this->provider->domain . '/login/oauth/authorize', $this->provider->getBaseAuthorizationUrl());
-        $this->assertEquals($this->provider->domain . '/login/oauth/access_token', $this->provider->getBaseAccessTokenUrl([]));
+        $this->assertEquals($this->provider->domain . '/oauth/authorize', $this->provider->getBaseAuthorizationUrl());
+        $this->assertEquals($this->provider->domain . '/oauth/access_token', $this->provider->getBaseAccessTokenUrl([]));
         $this->assertEquals($this->provider->domain . '/api/v3/user', $this->provider->getResourceOwnerDetailsUrl($token));
         //$this->assertEquals($this->provider->domain.'/api/v3/user/emails', $this->provider->urlUserEmails($token));
     }
