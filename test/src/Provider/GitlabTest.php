@@ -1,14 +1,24 @@
-<?php namespace League\OAuth2\Client\Test\Provider;
+<?php
+
+/*
+ * Gitlab OAuth2 Provider
+ * (c) Omines Internetbureau B.V. - www.omines.nl
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Omines\OAuth2\Client\Test\Provider;
 
 use Mockery as m;
 
-class GithubTest extends \PHPUnit_Framework_TestCase
+class GitlabTest extends \PHPUnit_Framework_TestCase
 {
     protected $provider;
 
     protected function setUp()
     {
-        $this->provider = new \League\OAuth2\Client\Provider\Github([
+        $this->provider = new \Omines\OAuth2\Client\Provider\Gitlab([
             'clientId' => 'mock_client_id',
             'clientSecret' => 'mock_secret',
             'redirectUri' => 'none',
@@ -36,10 +46,9 @@ class GithubTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($this->provider->getState());
     }
 
-
     public function testScopes()
     {
-        $options = ['scope' => [uniqid(),uniqid()]];
+        $options = ['scope' => [uniqid(), uniqid()]];
 
         $url = $this->provider->getAuthorizationUrl($options);
 
@@ -87,7 +96,6 @@ class GithubTest extends \PHPUnit_Framework_TestCase
     {
         $this->provider->domain = 'https://github.company.com';
 
-
         $response = m::mock('Psr\Http\Message\ResponseInterface');
         $response->shouldReceive('getBody')->times(1)->andReturn('access_token=mock_access_token&expires=3600&refresh_token=mock_refresh_token&otherKey={1234}');
         $response->shouldReceive('getHeader')->andReturn(['content-type' => 'application/x-www-form-urlencoded']);
@@ -99,15 +107,15 @@ class GithubTest extends \PHPUnit_Framework_TestCase
 
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
 
-        $this->assertEquals($this->provider->domain.'/login/oauth/authorize', $this->provider->getBaseAuthorizationUrl());
-        $this->assertEquals($this->provider->domain.'/login/oauth/access_token', $this->provider->getBaseAccessTokenUrl([]));
-        $this->assertEquals($this->provider->domain.'/api/v3/user', $this->provider->getResourceOwnerDetailsUrl($token));
+        $this->assertEquals($this->provider->domain . '/login/oauth/authorize', $this->provider->getBaseAuthorizationUrl());
+        $this->assertEquals($this->provider->domain . '/login/oauth/access_token', $this->provider->getBaseAccessTokenUrl([]));
+        $this->assertEquals($this->provider->domain . '/api/v3/user', $this->provider->getResourceOwnerDetailsUrl($token));
         //$this->assertEquals($this->provider->domain.'/api/v3/user/emails', $this->provider->urlUserEmails($token));
     }
 
     public function testUserData()
     {
-        $userId = rand(1000,9999);
+        $userId = rand(1000, 9999);
         $name = uniqid();
         $nickname = uniqid();
         $email = uniqid();
@@ -118,7 +126,7 @@ class GithubTest extends \PHPUnit_Framework_TestCase
         $postResponse->shouldReceive('getStatusCode')->andReturn(200);
 
         $userResponse = m::mock('Psr\Http\Message\ResponseInterface');
-        $userResponse->shouldReceive('getBody')->andReturn('{"id": '.$userId.', "login": "'.$nickname.'", "name": "'.$name.'", "email": "'.$email.'"}');
+        $userResponse->shouldReceive('getBody')->andReturn('{"id": ' . $userId . ', "login": "' . $nickname . '", "name": "' . $name . '", "email": "' . $email . '"}');
         $userResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
         $userResponse->shouldReceive('getStatusCode')->andReturn(200);
 
@@ -180,7 +188,7 @@ class GithubTest extends \PHPUnit_Framework_TestCase
      **/
     public function testExceptionThrownWhenErrorObjectReceived()
     {
-        $status = rand(400,600);
+        $status = rand(400, 600);
         $postResponse = m::mock('Psr\Http\Message\ResponseInterface');
         $postResponse->shouldReceive('getBody')->andReturn('{"message": "Validation Failed","errors": [{"resource": "Issue","field": "title","code": "missing_field"}]}');
         $postResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);

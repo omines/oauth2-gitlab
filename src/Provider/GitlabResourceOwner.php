@@ -1,16 +1,28 @@
-<?php namespace League\OAuth2\Client\Provider;
+<?php
 
-class GithubResourceOwner implements ResourceOwnerInterface
+/*
+ * Gitlab OAuth2 Provider
+ * (c) Omines Internetbureau B.V. - www.omines.nl
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Omines\OAuth2\Client\Provider;
+
+use League\OAuth2\Client\Provider\ResourceOwnerInterface;
+
+class GitlabResourceOwner implements ResourceOwnerInterface
 {
     /**
-     * Domain
+     * Domain.
      *
      * @var string
      */
     protected $domain;
 
     /**
-     * Raw response
+     * Raw response.
      *
      * @var array
      */
@@ -19,15 +31,15 @@ class GithubResourceOwner implements ResourceOwnerInterface
     /**
      * Creates new resource owner.
      *
-     * @param array  $response
+     * @param array $response
      */
-    public function __construct(array $response = array())
+    public function __construct(array $response = [])
     {
         $this->response = $response;
     }
 
     /**
-     * Get resource owner id
+     * Get resource owner id.
      *
      * @return string|null
      */
@@ -37,7 +49,7 @@ class GithubResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * Get resource owner email
+     * Get resource owner email.
      *
      * @return string|null
      */
@@ -47,7 +59,7 @@ class GithubResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * Get resource owner name
+     * Get resource owner name.
      *
      * @return string|null
      */
@@ -57,7 +69,7 @@ class GithubResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * Get resource owner nickname
+     * Get resource owner nickname.
      *
      * @return string|null
      */
@@ -67,19 +79,19 @@ class GithubResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * Get resource owner url
+     * Get resource owner url.
      *
      * @return string|null
      */
     public function getUrl()
     {
-        return trim($this->domain.'/'.$this->getNickname()) ?: null;
+        return trim($this->domain . '/' . $this->getNickname()) ?: null;
     }
 
     /**
-     * Set resource owner domain
+     * Set resource owner domain.
      *
-     * @param  string $domain
+     * @param string $domain
      *
      * @return ResourceOwner
      */

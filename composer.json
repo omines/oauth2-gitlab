@@ -1,12 +1,12 @@
 {
-    "name": "league/oauth2-github",
-    "description": "Github OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+    "name": "omines/oauth2-gitlab",
+    "description": "Gitlab OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
     "license": "MIT",
     "authors": [
         {
-            "name": "Steven Maguire",
-            "email": "stevenmaguire@gmail.com",
-            "homepage": "https://github.com/stevenmaguire"
+            "name": "Niels Keurentjes",
+            "email": "niels.keurentjes@omines.com",
+            "homepage": "https://www.omines.nl/"
         }
     ],
     "keywords": [
@@ -15,7 +15,7 @@
         "client",
         "authorization",
         "authorisation",
-        "github"
+        "gitlab"
     ],
     "require": {
         "php": ">=5.5.0",
@@ -23,17 +23,16 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
-        "mockery/mockery": "~0.9",
-        "squizlabs/php_codesniffer": "~2.0"
+        "mockery/mockery": "~0.9"
     },
     "autoload": {
         "psr-4": {
-            "League\\OAuth2\\Client\\": "src/"
+            "Omines\\OAuth2\\Client\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "League\\OAuth2\\Client\\Test\\": "test/src/"
+            "Omines\\OAuth2\\Client\\Test\\": "test/src/"
         }
     },
     "extra": {

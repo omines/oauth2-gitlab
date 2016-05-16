@@ -12,7 +12,6 @@ before_script:
   - travis_retry phpenv rehash
 
 script:
-  - ./vendor/bin/phpcs --standard=psr2 src/
   - ./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:

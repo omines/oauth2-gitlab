@@ -1,16 +1,25 @@
 <?php
 
-namespace League\OAuth2\Client\Provider\Exception;
+/*
+ * Gitlab OAuth2 Provider
+ * (c) Omines Internetbureau B.V. - www.omines.nl
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
+namespace Omines\OAuth2\Client\Provider\Exception;
+
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Psr\Http\Message\ResponseInterface;
 
-class GithubIdentityProviderException extends IdentityProviderException
+class GitlabIdentityProviderException extends IdentityProviderException
 {
     /**
      * Creates client exception from response.
      *
-     * @param  ResponseInterface $response
-     * @param  string $data Parsed response data
+     * @param ResponseInterface $response
+     * @param string            $data     Parsed response data
      *
      * @return IdentityProviderException
      */
@@ -25,8 +34,8 @@ class GithubIdentityProviderException extends IdentityProviderException
     /**
      * Creates oauth exception from response.
      *
-     * @param  ResponseInterface $response
-     * @param  string $data Parsed response data
+     * @param ResponseInterface $response
+     * @param string            $data     Parsed response data
      *
      * @return IdentityProviderException
      */
@@ -41,8 +50,8 @@ class GithubIdentityProviderException extends IdentityProviderException
     /**
      * Creates identity exception from response.
      *
-     * @param  ResponseInterface $response
-     * @param  string $message
+     * @param ResponseInterface $response
+     * @param string            $message
      *
      * @return IdentityProviderException
      */
