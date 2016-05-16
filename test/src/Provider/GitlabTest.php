@@ -31,6 +31,14 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         parent::tearDown();
     }
 
+    public function testShorthandedSelfhostedConstructor()
+    {
+        $provider = new \Omines\OAuth2\Client\Provider\Gitlab([
+            'domain' => 'https://gitlab.example.org',
+        ]);
+        $this->assertSame('https://gitlab.example.org', $provider->domain);
+    }
+
     public function testAuthorizationUrl()
     {
         $url = $this->provider->getAuthorizationUrl();
@@ -115,10 +123,17 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
 
     public function testUserData()
     {
-        $userId = rand(1000, 9999);
-        $name = uniqid();
-        $username = uniqid();
-        $email = uniqid();
+        $userdata = [
+            'id' => rand(1000, 9999),
+            'name' => uniqid('name'),
+            'username' => uniqid('username'),
+            'email' => uniqid('email'),
+            'avatar_url' => 'https://example.org/' . uniqid('avatar'),
+            'web_url' => 'https://example.org/' . uniqid('web'),
+            'state' => 'active',
+            'is_admin' => true,
+            'external' => true,
+        ];
 
         $postResponse = m::mock('Psr\Http\Message\ResponseInterface');
         $postResponse->shouldReceive('getBody')->andReturn('access_token=mock_access_token&expires=3600&refresh_token=mock_refresh_token&otherKey={1234}');
@@ -126,7 +141,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $postResponse->shouldReceive('getStatusCode')->andReturn(200);
 
         $userResponse = m::mock('Psr\Http\Message\ResponseInterface');
-        $userResponse->shouldReceive('getBody')->andReturn('{"id": ' . $userId . ', "username": "' . $username . '", "name": "' . $name . '", "email": "' . $email . '"}');
+        $userResponse->shouldReceive('getBody')->andReturn(json_encode($userdata));
         $userResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
         $userResponse->shouldReceive('getStatusCode')->andReturn(200);
 
@@ -139,14 +154,17 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
         $user = $this->provider->getResourceOwner($token);
 
-        $this->assertEquals($userId, $user->getId());
-        $this->assertEquals($userId, $user->toArray()['id']);
-        $this->assertEquals($name, $user->getName());
-        $this->assertEquals($name, $user->toArray()['name']);
-        $this->assertEquals($username, $user->getUsername());
-        $this->assertEquals($username, $user->toArray()['username']);
-        $this->assertEquals($email, $user->getEmail());
-        $this->assertEquals($email, $user->toArray()['email']);
+        $this->assertSame($userdata, $user->toArray());
+        $this->assertEquals($userdata['id'], $user->getId());
+        $this->assertEquals($userdata['name'], $user->getName());
+        $this->assertEquals($userdata['username'], $user->getUsername());
+        $this->assertEquals($userdata['email'], $user->getEmail());
+        $this->assertEquals($userdata['avatar_url'], $user->getAvatarUrl());
+        $this->assertEquals($userdata['web_url'], $user->getProfileUrl());
+        $this->assertEquals('https://gitlab.com', $user->getDomain());
+        $this->assertTrue($user->isActive());
+        $this->assertTrue($user->isAdmin());
+        $this->assertTrue($user->isExternal());
     }
 
     public function testUserEmails()
