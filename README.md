@@ -1,4 +1,4 @@
-# Gitlab Provider for OAuth 2.0 Client
+# GitLab Provider for OAuth 2.0 Client
 [![Latest Version](https://img.shields.io/github/release/omines/oauth2-gitlab.svg?style=flat-square)](https://github.com/omines/oauth2-gitlab/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/omines/oauth2-gitlab/master.svg?style=flat-square)](https://travis-ci.org/omines/oauth2-gitlab)
@@ -6,7 +6,7 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/omines/oauth2-gitlab.svg?style=flat-square)](https://scrutinizer-ci.com/g/omines/oauth2-gitlab)
 [![Total Downloads](https://img.shields.io/packagist/dt/omines/oauth2-gitlab.svg?style=flat-square)](https://packagist.org/packages/omines/oauth2-gitlab)
 
-This package provides Gitlab OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
+This package provides GitLab OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
 ## Installation
 
