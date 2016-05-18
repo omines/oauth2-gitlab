@@ -8,4 +8,4 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Original fork, feature complete
 
-[Unreleased]: https://github.com/omines/directadmin/compare/1.0.0-alpha.1...master
+[Unreleased]: https://github.com/omines/oauth2-gitlab/compare/1.0.0-alpha.1...master

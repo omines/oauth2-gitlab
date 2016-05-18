@@ -1,6 +1,6 @@
 {
     "name": "omines/oauth2-gitlab",
-    "description": "Gitlab OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+    "description": "GitLab OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
     "license": "MIT",
     "authors": [
         {
@@ -19,11 +19,11 @@
     ],
     "require": {
         "php": ">=5.5.0",
-        "league/oauth2-client": "~1.0"
+        "league/oauth2-client": "^1.4.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0",
-        "mockery/mockery": "~0.9"
+        "phpunit/phpunit": "^4.8",
+        "mockery/mockery": "^0.9"
     },
     "suggest": {
         "m4tthumphrey/php-gitlab-api": "For further API usage using the acquired OAuth2 token"
