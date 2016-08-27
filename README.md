@@ -48,7 +48,7 @@ if (!isset($_GET['code'])) {
 
     // Try to get an access token (using the authorization code grant)
     $token = $provider->getAccessToken('authorization_code', [
-        'code' => $_GET['code']
+        'code' => $_GET['code'],
     ]);
 
     // Optional: Now you have a token you can look up a users profile data
@@ -71,9 +71,19 @@ if (!isset($_GET['code'])) {
 }
 ```
 
+### Performing API calls
+
+Install [`m4tthumphrey/php-gitlab-api`](https://packagist.org/packages/m4tthumphrey/php-gitlab-api) to interact with the
+Gitlab API after authentication.
+
+```php
+$client = new \Gitlab\Client('https://my.gitlab.url/api/v3/');
+$client->authenticate($token->getToken(), \Gitlab\Client::AUTH_OAUTH_TOKEN);
+```
+
 ## Testing
 
-``` bash
+```bash
 $ ./vendor/bin/phpunit
 ```
 
@@ -84,8 +94,8 @@ Please see [CONTRIBUTING](https://github.com/omines/oauth2-gitlab/blob/master/CO
 
 ## Credits
 
-This code is a fork from the [official Github provider](https://github.com/thephpleague/oauth2-github) adapted for Gitlab
-use, so many credits go to [Steven Maguire](https://github.com/stevenmaguire).
+This code is a modified fork from the [official Github provider](https://github.com/thephpleague/oauth2-github) adapted
+for Gitlab use, so many credits go to [Steven Maguire](https://github.com/stevenmaguire).
 
 ## Legal
 

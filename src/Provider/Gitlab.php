@@ -30,11 +30,7 @@ class Gitlab extends AbstractProvider
     const PATH_AUTHORIZE = '/oauth/authorize';
     const PATH_TOKEN = '/oauth/token';
 
-    /**
-     * Domain.
-     *
-     * @var string
-     */
+    /** @var string */
     public $domain = 'https://gitlab.com';
 
     /**
