@@ -18,8 +18,8 @@
         "gitlab"
     ],
     "require": {
-        "php": ">=5.5.0",
-        "league/oauth2-client": "^1.4.1"
+        "php": ">=5.5.9",
+        "league/oauth2-client": "^1.4.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",

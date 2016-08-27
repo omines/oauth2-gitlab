@@ -19,8 +19,10 @@ use League\OAuth2\Client\Provider\ResourceOwnerInterface;
  */
 class GitlabResourceOwner implements ResourceOwnerInterface
 {
+    /** @var array */
     private $data;
 
+    /** @var string */
     private $domain;
 
     /**

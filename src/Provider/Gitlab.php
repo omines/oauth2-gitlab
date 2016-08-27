@@ -26,6 +26,10 @@ class Gitlab extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
+    const PATH_API_USER = '/api/v3/user';
+    const PATH_AUTHORIZE = '/oauth/authorize';
+    const PATH_TOKEN = '/oauth/token';
+
     /**
      * Domain.
      *
@@ -54,7 +58,7 @@ class Gitlab extends AbstractProvider
      */
     public function getBaseAuthorizationUrl()
     {
-        return $this->domain . '/oauth/authorize';
+        return $this->domain . self::PATH_AUTHORIZE;
     }
 
     /**
@@ -66,7 +70,7 @@ class Gitlab extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-        return $this->domain . '/oauth/token';
+        return $this->domain . self::PATH_TOKEN;
     }
 
     /**
@@ -78,14 +82,13 @@ class Gitlab extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        return $this->domain . '/api/v3/user';
+        return $this->domain . self::PATH_API_USER;
     }
 
     /**
      * Get the default scopes used by this provider.
      *
-     * This should not be a complete list of all scopes, but the minimum
-     * required for the provider user interface!
+     * This returns an empty array as Gitlab does not support scopes yet.
      *
      * @return array
      */
