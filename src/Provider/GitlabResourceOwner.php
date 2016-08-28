@@ -10,7 +10,9 @@
 
 namespace Omines\OAuth2\Client\Provider;
 
+use Gitlab\Client;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
+use League\OAuth2\Client\Token\AccessToken;
 
 /**
  * GitlabResourceOwner.
@@ -19,20 +21,26 @@ use League\OAuth2\Client\Provider\ResourceOwnerInterface;
  */
 class GitlabResourceOwner implements ResourceOwnerInterface
 {
+    const PATH_API = '/api/v3/';
+
     /** @var array */
     private $data;
 
     /** @var string */
     private $domain;
 
+    /** @var AccessToken */
+    private $token;
+
     /**
      * Creates new resource owner.
      *
      * @param array $response
      */
-    public function __construct(array $response = [])
+    public function __construct(array $response = [], AccessToken $token)
     {
         $this->data = $response;
+        $this->token = $token;
     }
 
     /**
@@ -43,6 +51,22 @@ class GitlabResourceOwner implements ResourceOwnerInterface
     public function getId()
     {
         return (int) $this->get('id');
+    }
+
+    /**
+     * Returns an authenticated API client.
+     *
+     * Requires optional Gitlab API client to be installed.
+     *
+     * @return Client
+     */
+    public function getApiClient()
+    {
+        if (!class_exists('\\Gitlab\\Clien')) {
+            throw new \LogicException(__METHOD__ . ' requires package m4tthumphrey/php-gitlab-api to be installed and autoloaded');
+        }
+        $client = new Client(rtrim($this->domain, '/') . self::PATH_API);
+        return $client->authenticate($this->token->getToken(), Client::AUTH_OAUTH_TOKEN);
     }
 
     /**
@@ -111,6 +135,14 @@ class GitlabResourceOwner implements ResourceOwnerInterface
     public function getProfileUrl()
     {
         return $this->get('web_url');
+    }
+
+    /**
+     * @return AccessToken
+     */
+    public function getToken()
+    {
+        return $this->token;
     }
 
     /**

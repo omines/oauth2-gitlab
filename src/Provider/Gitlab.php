@@ -96,9 +96,9 @@ class Gitlab extends AbstractProvider
     /**
      * Check a provider response for errors.
      *
+     * @param  ResponseInterface $response
+     * @param  string            $data     Parsed response data
      * @throws IdentityProviderException
-     * @param  ResponseInterface         $response
-     * @param  string                    $data     Parsed response data
      */
     protected function checkResponse(ResponseInterface $response, $data)
     {
@@ -112,13 +112,13 @@ class Gitlab extends AbstractProvider
     /**
      * Generate a user object from a successful user details request.
      *
-     * @param  array                                                 $response
-     * @param  AccessToken                                           $token
+     * @param  array       $response
+     * @param  AccessToken $token
      * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     protected function createResourceOwner(array $response, AccessToken $token)
     {
-        $user = new GitlabResourceOwner($response);
+        $user = new GitlabResourceOwner($response, $token);
 
         return $user->setDomain($this->domain);
     }

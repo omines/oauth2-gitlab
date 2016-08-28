@@ -3,6 +3,8 @@ All notable changes to `oauth2-gitlab` will be documented in this file
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+ - Added getApiClient method on GitlabResourceOwner to get an API connector
 
 ## [1.0.0] - 2016-05-20
 ### Changed
