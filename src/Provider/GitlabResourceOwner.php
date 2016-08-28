@@ -62,8 +62,8 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function getApiClient()
     {
-        if (!class_exists('\\Gitlab\\Clien')) {
-            throw new \LogicException(__METHOD__ . ' requires package m4tthumphrey/php-gitlab-api to be installed and autoloaded');
+        if (!class_exists('\\Gitlab\\Client')) {
+            throw new \LogicException(__METHOD__ . ' requires package m4tthumphrey/php-gitlab-api to be installed and autoloaded'); // @codeCoverageIgnore
         }
         $client = new Client(rtrim($this->domain, '/') . self::PATH_API);
         return $client->authenticate($this->token->getToken(), Client::AUTH_OAUTH_TOKEN);

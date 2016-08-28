@@ -10,10 +10,14 @@
 
 namespace Omines\OAuth2\Client\Test\Provider;
 
+use GuzzleHttp\ClientInterface;
 use Mockery as m;
+use Omines\OAuth2\Client\Provider\Gitlab;
+use Omines\OAuth2\Client\Provider\GitlabResourceOwner;
 
 class GitlabTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var Gitlab */
     protected $provider;
 
     protected function setUp()
@@ -145,6 +149,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $userResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
         $userResponse->shouldReceive('getStatusCode')->andReturn(200);
 
+        /** @var ClientInterface $client */
         $client = m::mock('GuzzleHttp\ClientInterface');
         $client->shouldReceive('send')
             ->times(2)
@@ -154,6 +159,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
         $user = $this->provider->getResourceOwner($token);
 
+        /** @var GitlabResourceOwner $user */
         $this->assertSame($userdata, $user->toArray());
         $this->assertEquals($userdata['id'], $user->getId());
         $this->assertEquals($userdata['name'], $user->getName());
@@ -162,9 +168,20 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($userdata['avatar_url'], $user->getAvatarUrl());
         $this->assertEquals($userdata['web_url'], $user->getProfileUrl());
         $this->assertEquals('https://gitlab.com', $user->getDomain());
+        $this->assertEquals('mock_access_token', $user->getToken()->getToken());
         $this->assertTrue($user->isActive());
         $this->assertTrue($user->isAdmin());
         $this->assertTrue($user->isExternal());
+        return $user;
+    }
+
+    /**
+     * @depends testUserData
+     */
+    public function testApiClient(GitlabResourceOwner $owner)
+    {
+        $client = $owner->getApiClient();
+        $this->assertEquals('https://gitlab.com/api/v3/', $client->getBaseUrl());
     }
 
     public function testUserEmails()
