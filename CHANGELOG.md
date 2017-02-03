@@ -3,6 +3,8 @@ All notable changes to `oauth2-gitlab` will be documented in this file
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+ - Upgrade league/oauth2-client to major version 2
 
 ## [1.1.0] - 2016-08-28
 ### Added
