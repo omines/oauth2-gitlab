@@ -3,6 +3,8 @@ All notable changes to `oauth2-gitlab` will be documented in this file
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.0.0] - 2017-02-03
 ### Added
  - PHP 7.1 is now officially supported and tested
 
@@ -25,6 +27,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Original fork, feature complete
 
-[Unreleased]: https://github.com/omines/oauth2-gitlab/compare/1.1.0...master
+[Unreleased]: https://github.com/omines/oauth2-gitlab/compare/2.0.0...master
+[2.0.0]: https://github.com/omines/oauth2-gitlab/compare/1.1.0...2.0.0
 [1.1.0]: https://github.com/omines/oauth2-gitlab/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/omines/oauth2-gitlab/compare/1.0.0-alpha.1...1.0.0
