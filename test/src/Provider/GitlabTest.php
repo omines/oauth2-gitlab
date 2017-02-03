@@ -2,7 +2,7 @@
 
 /*
  * Gitlab OAuth2 Provider
- * (c) Omines Internetbureau B.V. - www.omines.nl
+ * (c) Omines Internetbureau B.V. - https://omines.nl/
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -218,7 +218,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException League\OAuth2\Client\Provider\Exception\IdentityProviderException
+     * @expectedException \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      **/
     public function testExceptionThrownWhenErrorObjectReceived()
     {
@@ -237,7 +237,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException League\OAuth2\Client\Provider\Exception\IdentityProviderException
+     * @expectedException \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      **/
     public function testExceptionThrownWhenOAuthErrorReceived()
     {
