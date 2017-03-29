@@ -21,7 +21,7 @@ use League\OAuth2\Client\Token\AccessToken;
  */
 class GitlabResourceOwner implements ResourceOwnerInterface
 {
-    const PATH_API = '/api/v3/';
+    const PATH_API = '/api/v4/';
 
     /** @var array */
     private $data;
