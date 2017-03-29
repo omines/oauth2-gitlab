@@ -26,7 +26,7 @@ class Gitlab extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
-    const PATH_API_USER = '/api/v3/user';
+    const PATH_API_USER = '/api/v4/user';
     const PATH_AUTHORIZE = '/oauth/authorize';
     const PATH_TOKEN = '/oauth/token';
 
