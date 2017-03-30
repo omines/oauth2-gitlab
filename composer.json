@@ -25,7 +25,7 @@
         "friendsofphp/php-cs-fixer": "^2.0",
         "mockery/mockery": "^0.9",
         "m4tthumphrey/php-gitlab-api": "^7.13",
-        "phpunit/phpunit": "^4.8"
+        "phpunit/phpunit": "^5.7 || ^6.0"
     },
     "suggest": {
         "m4tthumphrey/php-gitlab-api": "For further API usage using the acquired OAuth2 token"

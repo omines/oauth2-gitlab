@@ -3,13 +3,16 @@ All notable changes to `oauth2-gitlab` will be documented in this file
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+ - **Breaking**: Upgrade Gitlab API from v3 to v4
+ - Test suite upgraded from PHPUnit 4 to 5/6 hybrid
 
 ## [2.0.0] - 2017-02-03
 ### Added
  - PHP 7.1 is now officially supported and tested
 
 ### Changed
- - Upgrade league/oauth2-client to major version 2
+ - **Breaking**: Upgrade league/oauth2-client to major version 2
  - Included PHP-CS-Fixer
 
 ### Removed

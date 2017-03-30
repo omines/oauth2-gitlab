@@ -14,8 +14,9 @@ use GuzzleHttp\ClientInterface;
 use Mockery as m;
 use Omines\OAuth2\Client\Provider\Gitlab;
 use Omines\OAuth2\Client\Provider\GitlabResourceOwner;
+use PHPUnit\Framework\TestCase;
 
-class GitlabTest extends \PHPUnit_Framework_TestCase
+class GitlabTest extends TestCase
 {
     /** @var Gitlab */
     protected $provider;
@@ -159,7 +160,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
         $user = $this->provider->getResourceOwner($token);
 
-        /** @var GitlabResourceOwner $user */
+        /* @var GitlabResourceOwner $user */
         $this->assertSame($userdata, $user->toArray());
         $this->assertEquals($userdata['id'], $user->getId());
         $this->assertEquals($userdata['name'], $user->getName());
@@ -184,9 +185,9 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('https://gitlab.com/api/v4/', $client->getBaseUrl());
     }
 
-    public function testUserEmails()
+    /* public function testUserEmails()
     {
-        /*
+
         $userId = rand(1000,9999);
         $name = uniqid();
         $nickname = uniqid();
@@ -214,8 +215,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($nickname, $user->getNickname());
         $this->assertEquals($email, $user->getEmail());
         $this->assertContains($nickname, $user->getUrl());
-        */
-    }
+    } */
 
     /**
      * @expectedException \League\OAuth2\Client\Provider\Exception\IdentityProviderException
