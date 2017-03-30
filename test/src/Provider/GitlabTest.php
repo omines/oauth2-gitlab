@@ -121,8 +121,8 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($this->provider->domain . '/oauth/authorize', $this->provider->getBaseAuthorizationUrl());
         $this->assertEquals($this->provider->domain . '/oauth/token', $this->provider->getBaseAccessTokenUrl([]));
-        $this->assertEquals($this->provider->domain . '/api/v3/user', $this->provider->getResourceOwnerDetailsUrl($token));
-        //$this->assertEquals($this->provider->domain.'/api/v3/user/emails', $this->provider->urlUserEmails($token));
+        $this->assertEquals($this->provider->domain . '/api/v4/user', $this->provider->getResourceOwnerDetailsUrl($token));
+        //$this->assertEquals($this->provider->domain.'/api/v4/user/emails', $this->provider->urlUserEmails($token));
     }
 
     public function testUserData()
@@ -181,7 +181,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
     public function testApiClient(GitlabResourceOwner $owner)
     {
         $client = $owner->getApiClient();
-        $this->assertEquals('https://gitlab.com/api/v3/', $client->getBaseUrl());
+        $this->assertEquals('https://gitlab.com/api/v4/', $client->getBaseUrl());
     }
 
     public function testUserEmails()
@@ -243,7 +243,7 @@ class GitlabTest extends \PHPUnit_Framework_TestCase
     {
         $status = 200;
         $postResponse = m::mock('Psr\Http\Message\ResponseInterface');
-        $postResponse->shouldReceive('getBody')->andReturn('{"error": "bad_verification_code","error_description": "The code passed is incorrect or expired.","error_uri": "https://developer.github.com/v3/oauth/#bad-verification-code"}');
+        $postResponse->shouldReceive('getBody')->andReturn('{"error": "bad_verification_code","error_description": "The code passed is incorrect or expired.","error_uri": "https://developer.github.com/v4/oauth/#bad-verification-code"}');
         $postResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
         $postResponse->shouldReceive('getStatusCode')->andReturn($status);
 
