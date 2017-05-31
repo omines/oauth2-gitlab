@@ -8,6 +8,9 @@
 
 This package provides GitLab OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
+GitLab 8.17 or later is required as the V4 API is being used. If compatibility with older versions
+of GitLab is required use version 2 of this library.
+
 ## Installation
 
 To install, use composer:
