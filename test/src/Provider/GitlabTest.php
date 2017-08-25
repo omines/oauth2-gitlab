@@ -182,7 +182,7 @@ class GitlabTest extends TestCase
     public function testApiClient(GitlabResourceOwner $owner)
     {
         $client = $owner->getApiClient();
-        $this->assertEquals('https://gitlab.com/api/v4/', $client->getBaseUrl());
+        $this->assertInstanceOf(\Gitlab\Client::class, $client);
     }
 
     /* public function testUserEmails()
