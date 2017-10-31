@@ -82,16 +82,27 @@ class Gitlab extends AbstractProvider
     }
 
     /**
-     * Get the default scopes used by this provider.
+     * Get the default scopes used by GitLab.
+     * Current scopes are 'api', 'read_user', 'openid'
      *
-     * This returns an empty array as Gitlab does not support scopes yet.
+     * This returns an array with 'api' scope as default.
      *
      * @return array
      */
     protected function getDefaultScopes()
     {
-        return [];
+        return ['api'];
     }
+
+    /**
+     * GitLab uses a space to separate scopes
+     */
+    protected function getScopeSeparator()
+    {
+        return ' ';
+    }
+
+
 
     /**
      * Check a provider response for errors.

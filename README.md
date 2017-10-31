@@ -74,6 +74,21 @@ if (!isset($_GET['code'])) {
 }
 ```
 
+### Managing Scopes
+
+When creating your GitLab authorization URL, you can specify the state and scopes your application may authorize.
+
+```php
+$options = [
+    'state' => 'OPTIONAL_CUSTOM_CONFIGURED_STATE',
+    'scope' => ['read_user','openid'] // array or string
+];
+
+$authorizationUrl = $provider->getAuthorizationUrl($options);
+```
+If neither are defined, the provider will utilize internal defaults ```'api'```.
+
+
 ### Performing API calls
 
 Install [`m4tthumphrey/php-gitlab-api`](https://packagist.org/packages/m4tthumphrey/php-gitlab-api) to interact with the
