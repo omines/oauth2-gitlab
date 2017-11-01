@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 Nothing yet.
 
+## [3.1.0] - 2017-11-01
+### Added
+ - Access scope support was implemented
+
 ## [3.0.0] - 2017-05-31
 ### Changed
  - **Breaking**: Upgrade Gitlab API from v3 to v4
@@ -34,6 +38,7 @@ Nothing yet.
  - Original fork, feature complete
 
 [Unreleased]: https://github.com/omines/oauth2-gitlab/compare/3.0.0...master
+[3.1.0]: https://github.com/omines/oauth2-gitlab/compare/2.0.0...3.0.0
 [3.0.0]: https://github.com/omines/oauth2-gitlab/compare/2.0.0...3.0.0
 [2.0.0]: https://github.com/omines/oauth2-gitlab/compare/1.1.0...2.0.0
 [1.1.0]: https://github.com/omines/oauth2-gitlab/compare/1.0.0...1.1.0
