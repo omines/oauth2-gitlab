@@ -29,6 +29,8 @@ class Gitlab extends AbstractProvider
     const PATH_API_USER = '/api/v4/user';
     const PATH_AUTHORIZE = '/oauth/authorize';
     const PATH_TOKEN = '/oauth/token';
+    const DEFAULT_SCOPE = 'api';
+    const SCOPE_SEPARATOR = ' ';
 
     /** @var string */
     public $domain = 'https://gitlab.com';
@@ -91,7 +93,7 @@ class Gitlab extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-        return ['api'];
+        return [self::DEFAULT_SCOPE];
     }
 
     /**
@@ -99,10 +101,8 @@ class Gitlab extends AbstractProvider
      */
     protected function getScopeSeparator()
     {
-        return ' ';
+        return self::SCOPE_SEPARATOR;
     }
-
-
 
     /**
      * Check a provider response for errors.

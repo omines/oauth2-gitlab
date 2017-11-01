@@ -65,7 +65,7 @@ class GitlabTest extends TestCase
 
         $url = $this->provider->getAuthorizationUrl($options);
 
-        $this->assertContains(rawurlencode(implode(' ', $options['scope'])), $url);
+        $this->assertContains(rawurlencode(implode(Gitlab::SCOPE_SEPARATOR, $options['scope'])), $url);
     }
 
     public function testGetAuthorizationUrl()
