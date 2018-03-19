@@ -173,6 +173,7 @@ class GitlabTest extends TestCase
         $this->assertTrue($user->isActive());
         $this->assertTrue($user->isAdmin());
         $this->assertTrue($user->isExternal());
+
         return $user;
     }
 

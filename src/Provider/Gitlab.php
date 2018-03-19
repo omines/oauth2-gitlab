@@ -85,7 +85,7 @@ class Gitlab extends AbstractProvider
 
     /**
      * Get the default scopes used by GitLab.
-     * Current scopes are 'api', 'read_user', 'openid'
+     * Current scopes are 'api', 'read_user', 'openid'.
      *
      * This returns an array with 'api' scope as default.
      *
@@ -97,7 +97,7 @@ class Gitlab extends AbstractProvider
     }
 
     /**
-     * GitLab uses a space to separate scopes
+     * GitLab uses a space to separate scopes.
      */
     protected function getScopeSeparator()
     {
@@ -108,7 +108,7 @@ class Gitlab extends AbstractProvider
      * Check a provider response for errors.
      *
      * @param  ResponseInterface $response
-     * @param  string            $data     Parsed response data
+     * @param  string|array $data Parsed response data
      * @throws IdentityProviderException
      */
     protected function checkResponse(ResponseInterface $response, $data)
