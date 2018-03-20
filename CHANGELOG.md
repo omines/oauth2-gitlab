@@ -3,7 +3,8 @@ All notable changes to `oauth2-gitlab` will be documented in this file
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-Nothing yet.
+### Added
+ - PHP 7.2 and nightly added to test suite
 
 ## [3.1.0] - 2017-11-01
 ### Added

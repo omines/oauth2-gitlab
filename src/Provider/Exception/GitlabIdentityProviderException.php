@@ -24,7 +24,7 @@ class GitlabIdentityProviderException extends IdentityProviderException
      * Creates client exception from response.
      *
      * @param ResponseInterface $response
-     * @param string            $data     Parsed response data
+     * @param mixed $data Parsed response data
      * @return IdentityProviderException
      */
     public static function clientException(ResponseInterface $response, $data)

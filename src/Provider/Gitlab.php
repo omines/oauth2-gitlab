@@ -108,7 +108,7 @@ class Gitlab extends AbstractProvider
      * Check a provider response for errors.
      *
      * @param  ResponseInterface $response
-     * @param  string|array $data Parsed response data
+     * @param  mixed $data Parsed response data
      * @throws IdentityProviderException
      */
     protected function checkResponse(ResponseInterface $response, $data)
