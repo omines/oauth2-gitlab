@@ -3,9 +3,15 @@ All notable changes to `oauth2-gitlab` will be documented in this file
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+Nothing yet.
+
+## [3.1.1] - 2018-10-01
 ### Added
  - PHP 7.2 and nightly added to test suite
  - Infection testing added
+ 
+### Changed
+ - Test suite upgraded to PHPUnit 5/7 hybrid
 
 ## [3.1.0] - 2017-11-01
 ### Added
@@ -39,7 +45,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Original fork, feature complete
 
-[Unreleased]: https://github.com/omines/oauth2-gitlab/compare/3.1.0...master
+[Unreleased]: https://github.com/omines/oauth2-gitlab/compare/3.1.1...master
+[3.1.1]: https://github.com/omines/oauth2-gitlab/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/omines/oauth2-gitlab/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/omines/oauth2-gitlab/compare/2.0.0...3.0.0
 [2.0.0]: https://github.com/omines/oauth2-gitlab/compare/1.1.0...2.0.0
