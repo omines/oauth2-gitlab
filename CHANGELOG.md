@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
  - PHP 7.2 and nightly added to test suite
+ - Infection testing added
 
 ## [3.1.0] - 2017-11-01
 ### Added

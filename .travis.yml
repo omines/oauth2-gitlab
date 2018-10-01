@@ -16,9 +16,15 @@ before_script:
   - travis_retry composer self-update --no-progress
   - travis_retry composer update --no-interaction --no-progress $COMPOSER_FLAGS
   - travis_retry phpenv rehash
+  - wget https://github.com/infection/infection/releases/download/0.10.3/infection.phar
+  - wget https://github.com/infection/infection/releases/download/0.10.3/infection.phar.asc
+  - gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 493B4AA0
+  - gpg --with-fingerprint --verify infection.phar.asc infection.phar
+  - chmod +x infection.phar
 
 script:
   - ./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+  - ./infection.phar --min-msi=60 --threads=4
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
