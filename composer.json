@@ -41,6 +41,9 @@
             "Omines\\OAuth2\\Client\\Test\\": "test/src/"
         }
     },
+    "conflict": {
+        "league/oauth2-client": "2.4.0"
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "3.x-dev"
