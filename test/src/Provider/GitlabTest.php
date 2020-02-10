@@ -11,6 +11,7 @@
 namespace Omines\OAuth2\Client\Test\Provider;
 
 use GuzzleHttp\ClientInterface;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Mockery as m;
 use Omines\OAuth2\Client\Provider\Gitlab;
 use Omines\OAuth2\Client\Provider\GitlabResourceOwner;
@@ -21,7 +22,7 @@ class GitlabTest extends TestCase
     /** @var Gitlab */
     protected $provider;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->provider = new \Omines\OAuth2\Client\Provider\Gitlab([
             'clientId' => 'mock_client_id',
@@ -30,7 +31,7 @@ class GitlabTest extends TestCase
         ]);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
         parent::tearDown();
@@ -65,7 +66,7 @@ class GitlabTest extends TestCase
 
         $url = $this->provider->getAuthorizationUrl($options);
 
-        $this->assertContains(rawurlencode(implode(Gitlab::SCOPE_SEPARATOR, $options['scope'])), $url);
+        $this->assertStringContainsString(rawurlencode(implode(Gitlab::SCOPE_SEPARATOR, $options['scope'])), $url);
     }
 
     public function testGetAuthorizationUrl()
@@ -218,9 +219,6 @@ class GitlabTest extends TestCase
         $this->assertContains($nickname, $user->getUrl());
     } */
 
-    /**
-     * @expectedException \League\OAuth2\Client\Provider\Exception\IdentityProviderException
-     **/
     public function testExceptionThrownWhenErrorObjectReceived()
     {
         $status = rand(400, 600);
@@ -234,6 +232,8 @@ class GitlabTest extends TestCase
             ->times(1)
             ->andReturn($postResponse);
         $this->provider->setHttpClient($client);
+
+        $this->expectException(IdentityProviderException::class);
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
     }
 
@@ -253,6 +253,8 @@ class GitlabTest extends TestCase
             ->times(1)
             ->andReturn($postResponse);
         $this->provider->setHttpClient($client);
+
+        $this->expectException(IdentityProviderException::class);
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
     }
 }

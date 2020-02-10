@@ -3,11 +3,15 @@ All notable changes to `oauth2-gitlab` will be documented in this file
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-Nothing yet.
+### Changed
+ - Updated dependencies to those requiring up to date PHP versions
+ 
+### Removed
+ - Support for outdated and unsupported PHP versions (<7.2)
 
 ## [3.1.2] - 2018-11-23
 ### Changed
- - Added conflict with `oauth2-client:2.4.0` due to [breaking change upstream](https://github.com/thephpleague/oauth2-client/issues/752)
+ - Added conflict with `oauth2-client:2.4.0` due to [breaking change upstream](https://github.com/thephpleague/oauth2-client/issues/752) (#6)
  
 ## [3.1.1] - 2018-10-01
 ### Added
