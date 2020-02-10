@@ -3,6 +3,8 @@ All notable changes to `oauth2-gitlab` will be documented in this file
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [3.2.0] - 2020-02-10
 ### Changed
  - Updated dependencies to those requiring up to date PHP versions
  
@@ -53,7 +55,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - Original fork, feature complete
 
-[Unreleased]: https://github.com/omines/oauth2-gitlab/compare/3.1.2...master
+[Unreleased]: https://github.com/omines/oauth2-gitlab/compare/3.2.0...master
+[3.2.0]: https://github.com/omines/oauth2-gitlab/compare/3.1.2...3.2.0
 [3.1.2]: https://github.com/omines/oauth2-gitlab/compare/3.1.1...3.1.2
 [3.1.1]: https://github.com/omines/oauth2-gitlab/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/omines/oauth2-gitlab/compare/3.0.0...3.1.0
