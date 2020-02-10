@@ -12,9 +12,9 @@ namespace Omines\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
-use Omines\OAuth2\Client\Provider\Exception\GitlabIdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
+use Omines\OAuth2\Client\Provider\Exception\GitlabIdentityProviderException;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -37,9 +37,6 @@ class Gitlab extends AbstractProvider
 
     /**
      * Gitlab constructor.
-     *
-     * @param array $options
-     * @param array $collaborators
      */
     public function __construct(array $options, array $collaborators = [])
     {
@@ -62,8 +59,6 @@ class Gitlab extends AbstractProvider
     /**
      * Get access token url to retrieve token.
      *
-     * @param array $params
-     *
      * @return string
      */
     public function getBaseAccessTokenUrl(array $params)
@@ -73,8 +68,6 @@ class Gitlab extends AbstractProvider
 
     /**
      * Get provider url to fetch user details.
-     *
-     * @param AccessToken $token
      *
      * @return string
      */
@@ -107,7 +100,6 @@ class Gitlab extends AbstractProvider
     /**
      * Check a provider response for errors.
      *
-     * @param  ResponseInterface $response
      * @param  mixed $data Parsed response data
      * @throws IdentityProviderException
      */
@@ -123,8 +115,6 @@ class Gitlab extends AbstractProvider
     /**
      * Generate a user object from a successful user details request.
      *
-     * @param  array       $response
-     * @param  AccessToken $token
      * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface
      */
     protected function createResourceOwner(array $response, AccessToken $token)
