@@ -237,9 +237,6 @@ class GitlabTest extends TestCase
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
     }
 
-    /**
-     * @expectedException \League\OAuth2\Client\Provider\Exception\IdentityProviderException
-     **/
     public function testExceptionThrownWhenOAuthErrorReceived()
     {
         $status = 200;
