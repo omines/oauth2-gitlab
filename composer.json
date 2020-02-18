@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": ">=7.2",
-        "league/oauth2-client": "^2.2"
+        "league/oauth2-client": "^2.4.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.0",
@@ -40,9 +40,6 @@
         "psr-4": {
             "Omines\\OAuth2\\Client\\Test\\": "test/src/"
         }
-    },
-    "conflict": {
-        "league/oauth2-client": "2.4.0"
     },
     "extra": {
         "branch-alias": {
