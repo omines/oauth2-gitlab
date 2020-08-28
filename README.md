@@ -95,7 +95,8 @@ Install [`m4tthumphrey/php-gitlab-api`](https://packagist.org/packages/m4tthumph
 Gitlab API after authentication. Either connect manually:
 
 ```php
-$client = new \Gitlab\Client('https://my.gitlab.url/api/v4/');
+$client = new \Gitlab\Client();
+$client->setUrl('https://my.gitlab.url/api/v4/');
 $client->authenticate($token->getToken(), \Gitlab\Client::AUTH_OAUTH_TOKEN);
 ```
 Or call the `getApiClient` method on `GitlabResourceOwner` which does the same implicitly.
