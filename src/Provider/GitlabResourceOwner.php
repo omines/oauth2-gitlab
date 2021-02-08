@@ -72,7 +72,6 @@ class GitlabResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * @param  string $domain
      * @return $this
      */
     public function setDomain(string $domain): self
@@ -162,7 +161,6 @@ class GitlabResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * @param  string     $key
      * @param  mixed|null $default
      * @return mixed|null
      */
