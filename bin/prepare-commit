@@ -7,6 +7,6 @@ vendor/bin/phpstan
 XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text
 
 [ ! -f "./infection.phar" ] && bin/install-infection
-./infection.phar --min-msi=60 --threads=4
+./infection.phar --threads=4
 
 echo "All good, ready for commit!"

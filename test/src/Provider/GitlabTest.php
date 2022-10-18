@@ -10,8 +10,8 @@
 
 namespace Omines\OAuth2\Client\Test\Provider;
 
-use GuzzleHttp\ClientInterface;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Token\AccessToken;
 use Mockery as m;
 use Omines\OAuth2\Client\Provider\Gitlab;
 use Omines\OAuth2\Client\Provider\GitlabResourceOwner;
@@ -36,7 +36,7 @@ class GitlabTest extends TestCase
         parent::tearDown();
     }
 
-    public function testShorthandedSelfhostedConstructor()
+    public function testShorthandedSelfhostedConstructor(): void
     {
         $provider = new Gitlab([
             'domain' => 'https://gitlab.example.org',
@@ -44,7 +44,7 @@ class GitlabTest extends TestCase
         $this->assertSame('https://gitlab.example.org', $provider->domain);
     }
 
-    public function testAuthorizationUrl()
+    public function testAuthorizationUrl(): void
     {
         $url = $this->provider->getAuthorizationUrl();
         $uri = parse_url($url);
@@ -59,13 +59,14 @@ class GitlabTest extends TestCase
         $this->assertNotNull($this->provider->getState());
     }
 
-    public function testScopes()
+    public function testScopes(): void
     {
         $options = ['scope' => [uniqid(), uniqid()]];
-
         $url = $this->provider->getAuthorizationUrl($options);
-
         $this->assertStringContainsString(rawurlencode(implode(Gitlab::SCOPE_SEPARATOR, $options['scope'])), $url);
+
+        // Default scope
+        $this->assertStringContainsString('&scope=api&', $this->provider->getAuthorizationUrl());
     }
 
     public function testGetAuthorizationUrl()
@@ -99,6 +100,7 @@ class GitlabTest extends TestCase
 
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
 
+        $this->assertInstanceOf(AccessToken::class, $token);
         $this->assertEquals('mock_access_token', $token->getToken());
         $this->assertNull($token->getExpires());
         $this->assertNull($token->getRefreshToken());
@@ -120,6 +122,7 @@ class GitlabTest extends TestCase
 
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
 
+        $this->assertInstanceOf(AccessToken::class, $token);
         $this->assertEquals($this->provider->domain . '/oauth/authorize', $this->provider->getBaseAuthorizationUrl());
         $this->assertEquals($this->provider->domain . '/oauth/token', $this->provider->getBaseAccessTokenUrl([]));
         $this->assertEquals($this->provider->domain . '/api/v4/user', $this->provider->getResourceOwnerDetailsUrl($token));
@@ -150,7 +153,6 @@ class GitlabTest extends TestCase
         $userResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
         $userResponse->shouldReceive('getStatusCode')->andReturn(200);
 
-        /** @var ClientInterface $client */
         $client = m::mock('GuzzleHttp\ClientInterface');
         $client->shouldReceive('send')
             ->times(2)
@@ -158,9 +160,10 @@ class GitlabTest extends TestCase
         $this->provider->setHttpClient($client);
 
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
+        $this->assertInstanceOf(AccessToken::class, $token);
         $user = $this->provider->getResourceOwner($token);
+        $this->assertInstanceOf(GitlabResourceOwner::class, $user);
 
-        /* @var GitlabResourceOwner $user */
         $this->assertSame($userdata, $user->toArray());
         $this->assertEquals($userdata['id'], $user->getId());
         $this->assertEquals($userdata['name'], $user->getName());
@@ -177,10 +180,25 @@ class GitlabTest extends TestCase
         return $user;
     }
 
+    public function testBuggyResourceOwner(): void
+    {
+        $owner = new GitlabResourceOwner([
+            'id' => 'foo', // Should be an integer
+            'is_admin' => 'bar', // Should be a bool
+        ], new AccessToken([
+            'access_token' => 'foobar',
+        ]));
+
+        $this->assertSame(0, $owner->getId());
+        $this->assertTrue($owner->isAdmin());
+        $this->assertFalse($owner->isActive());
+        $this->assertTrue($owner->isExternal());
+    }
+
     /**
      * @depends testUserData
      */
-    public function testApiClient(GitlabResourceOwner $owner)
+    public function testApiClient(GitlabResourceOwner $owner): void
     {
         $client = $owner->getApiClient();
         $this->assertInstanceOf(\Gitlab\Client::class, $client);
@@ -199,7 +217,7 @@ class GitlabTest extends TestCase
     /**
      * @dataProvider provideErrorCodes
      */
-    public function testExceptionThrownWhenErrorObjectReceived(int $status)
+    public function testExceptionThrownWhenErrorObjectReceived(int $status): void
     {
         $postResponse = m::mock('Psr\Http\Message\ResponseInterface');
         $postResponse->shouldReceive('getBody')->andReturn('{"message": "Validation Failed","errors": [{"resource": "Issue","field": "title","code": "missing_field"}]}');
@@ -216,7 +234,7 @@ class GitlabTest extends TestCase
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
     }
 
-    public function testExceptionThrownWhenOAuthErrorReceived()
+    public function testExceptionThrownWhenOAuthErrorReceived(): void
     {
         $status = 200;
         $postResponse = m::mock('Psr\Http\Message\ResponseInterface');

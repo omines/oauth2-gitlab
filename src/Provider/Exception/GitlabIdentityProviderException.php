@@ -25,11 +25,11 @@ final class GitlabIdentityProviderException extends IdentityProviderException
      *
      * @param mixed $data Parsed response data
      */
-    public static function clientException(ResponseInterface $response, $data): IdentityProviderException
+    public static function clientException(ResponseInterface $response, mixed $data): IdentityProviderException
     {
-        return static::fromResponse(
+        return self::fromResponse(
             $response,
-            isset($data['message']) ? $data['message'] : $response->getReasonPhrase()
+            $data['message'] ?? $response->getReasonPhrase()
         );
     }
 
@@ -39,11 +39,11 @@ final class GitlabIdentityProviderException extends IdentityProviderException
      * @param ResponseInterface $response Response received from upstream
      * @param array $data Parsed response data
      */
-    public static function oauthException(ResponseInterface $response, $data): IdentityProviderException
+    public static function oauthException(ResponseInterface $response, array $data): IdentityProviderException
     {
-        return static::fromResponse(
+        return self::fromResponse(
             $response,
-            isset($data['error']) ? $data['error'] : $response->getReasonPhrase()
+            $data['error'] ?? $response->getReasonPhrase()
         );
     }
 
@@ -53,8 +53,8 @@ final class GitlabIdentityProviderException extends IdentityProviderException
      * @param ResponseInterface $response Response received from upstream
      * @param string|null $message        Parsed message
      */
-    protected static function fromResponse(ResponseInterface $response, $message = null): IdentityProviderException
+    protected static function fromResponse(ResponseInterface $response, ?string $message = null): IdentityProviderException
     {
-        return new static($message, $response->getStatusCode(), (string) $response->getBody());
+        return new self($message, $response->getStatusCode(), (string) $response->getBody());
     }
 }

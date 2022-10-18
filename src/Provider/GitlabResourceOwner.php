@@ -132,7 +132,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function isAdmin(): bool
     {
-        return (bool) $this->get('is_admin', false);
+        return $this->get('is_admin', false);
     }
 
     /**
@@ -140,7 +140,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function isExternal(): bool
     {
-        return (bool) $this->get('external', true);
+        return $this->get('external', true);
     }
 
     /**

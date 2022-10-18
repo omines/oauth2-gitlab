@@ -5,6 +5,12 @@
             "src"
         ]
     },
+    "minMsi": 75,
+    "minCoveredMsi": 80,
+    "mutators": {
+        "@default": true,
+        "@function_signature": true
+    },
     "logs": {
         "text": "log/infection.txt",
         "perMutator": "log/mutators.md"
