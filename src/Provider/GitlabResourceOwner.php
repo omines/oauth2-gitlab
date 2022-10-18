@@ -23,14 +23,9 @@ class GitlabResourceOwner implements ResourceOwnerInterface
 {
     public const PATH_API = '/api/v4/';
 
-    /** @var array */
-    private $data;
-
-    /** @var string */
-    private $domain;
-
-    /** @var AccessToken */
-    private $token;
+    private array $data;
+    private string $domain;
+    private AccessToken $token;
 
     /**
      * Creates new resource owner.
@@ -71,9 +66,6 @@ class GitlabResourceOwner implements ResourceOwnerInterface
         return $this->domain;
     }
 
-    /**
-     * @return $this
-     */
     public function setDomain(string $domain): self
     {
         $this->domain = $domain;
@@ -107,10 +99,8 @@ class GitlabResourceOwner implements ResourceOwnerInterface
 
     /**
      * URL to the user's avatar.
-     *
-     * @return string|null
      */
-    public function getAvatarUrl(): string
+    public function getAvatarUrl(): ?string
     {
         return $this->get('avatar_url');
     }
@@ -118,7 +108,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
     /**
      * URL to the user's profile page.
      */
-    public function getProfileUrl(): string
+    public function getProfileUrl(): ?string
     {
         return $this->get('web_url');
     }
@@ -160,12 +150,8 @@ class GitlabResourceOwner implements ResourceOwnerInterface
         return $this->data;
     }
 
-    /**
-     * @param  mixed|null $default
-     * @return mixed|null
-     */
-    protected function get(string $key, $default = null)
+    protected function get(string $key, mixed $default = null): mixed
     {
-        return isset($this->data[$key]) ? $this->data[$key] : $default;
+        return $this->data[$key] ?? $default;
     }
 }

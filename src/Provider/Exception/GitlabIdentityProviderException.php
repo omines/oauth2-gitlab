@@ -18,7 +18,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @author Niels Keurentjes <niels.keurentjes@omines.com>
  */
-class GitlabIdentityProviderException extends IdentityProviderException
+final class GitlabIdentityProviderException extends IdentityProviderException
 {
     /**
      * Creates client exception from response.

@@ -19,12 +19,11 @@ use PHPUnit\Framework\TestCase;
 
 class GitlabTest extends TestCase
 {
-    /** @var Gitlab */
-    protected $provider;
+    protected Gitlab $provider;
 
     protected function setUp(): void
     {
-        $this->provider = new \Omines\OAuth2\Client\Provider\Gitlab([
+        $this->provider = new Gitlab([
             'clientId' => 'mock_client_id',
             'clientSecret' => 'mock_secret',
             'redirectUri' => 'none',
@@ -39,7 +38,7 @@ class GitlabTest extends TestCase
 
     public function testShorthandedSelfhostedConstructor()
     {
-        $provider = new \Omines\OAuth2\Client\Provider\Gitlab([
+        $provider = new Gitlab([
             'domain' => 'https://gitlab.example.org',
         ]);
         $this->assertSame('https://gitlab.example.org', $provider->domain);

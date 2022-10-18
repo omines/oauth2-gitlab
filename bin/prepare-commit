@@ -4,6 +4,6 @@ cd $(dirname $0)/..
 
 php-cs-fixer fix
 vendor/bin/phpstan
-bin/phpunit
+XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text
 
 echo "All good, ready for commit!"
