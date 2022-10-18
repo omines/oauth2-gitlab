@@ -124,7 +124,7 @@ class GitlabTest extends TestCase
         $this->assertEquals($this->provider->domain . '/oauth/authorize', $this->provider->getBaseAuthorizationUrl());
         $this->assertEquals($this->provider->domain . '/oauth/token', $this->provider->getBaseAccessTokenUrl([]));
         $this->assertEquals($this->provider->domain . '/api/v4/user', $this->provider->getResourceOwnerDetailsUrl($token));
-        //$this->assertEquals($this->provider->domain.'/api/v4/user/emails', $this->provider->urlUserEmails($token));
+        // $this->assertEquals($this->provider->domain.'/api/v4/user/emails', $this->provider->urlUserEmails($token));
     }
 
     public function testUserData()

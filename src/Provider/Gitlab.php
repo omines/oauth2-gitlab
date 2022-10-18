@@ -27,11 +27,11 @@ class Gitlab extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
-    const PATH_API_USER = '/api/v4/user';
-    const PATH_AUTHORIZE = '/oauth/authorize';
-    const PATH_TOKEN = '/oauth/token';
-    const DEFAULT_SCOPE = 'api';
-    const SCOPE_SEPARATOR = ' ';
+    public const PATH_API_USER = '/api/v4/user';
+    public const PATH_AUTHORIZE = '/oauth/authorize';
+    public const PATH_TOKEN = '/oauth/token';
+    public const DEFAULT_SCOPE = 'api';
+    public const SCOPE_SEPARATOR = ' ';
 
     /** @var string */
     public $domain = 'https://gitlab.com';

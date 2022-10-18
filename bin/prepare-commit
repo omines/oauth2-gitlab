@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+cd $(dirname $0)/..
+
+php-cs-fixer fix
+vendor/bin/phpstan
+bin/phpunit
+
+echo "All good, ready for commit!"
