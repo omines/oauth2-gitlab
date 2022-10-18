@@ -55,6 +55,6 @@ final class GitlabIdentityProviderException extends IdentityProviderException
      */
     protected static function fromResponse(ResponseInterface $response, ?string $message = null): IdentityProviderException
     {
-        return new self($message, $response->getStatusCode(), (string) $response->getBody());
+        return new self($message, $response->getStatusCode(), $response->getBody()->getContents());
     }
 }

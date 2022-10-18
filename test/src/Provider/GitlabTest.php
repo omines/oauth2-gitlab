@@ -10,6 +10,7 @@
 
 namespace Omines\OAuth2\Client\Test\Provider;
 
+use GuzzleHttp\Psr7\Response;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use Mockery as m;
@@ -191,6 +192,17 @@ class GitlabTest extends TestCase
 
         $this->assertSame(0, $owner->getId());
         $this->assertTrue($owner->isAdmin());
+    }
+
+    public function testDefaultValuesForResourceOwner(): void
+    {
+        $owner = new GitlabResourceOwner([
+        ], new AccessToken([
+            'access_token' => 'foobar',
+        ]));
+
+        $this->assertSame(0, $owner->getId());
+        $this->assertFalse($owner->isAdmin());
         $this->assertFalse($owner->isActive());
         $this->assertTrue($owner->isExternal());
     }
@@ -219,36 +231,31 @@ class GitlabTest extends TestCase
      */
     public function testExceptionThrownWhenErrorObjectReceived(int $status): void
     {
-        $postResponse = m::mock('Psr\Http\Message\ResponseInterface');
-        $postResponse->shouldReceive('getBody')->andReturn('{"message": "Validation Failed","errors": [{"resource": "Issue","field": "title","code": "missing_field"}]}');
-        $postResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
-        $postResponse->shouldReceive('getStatusCode')->andReturn($status);
+        $response = new Response($status, ['content-type' => 'json'], '{"message": "Validation Failed","errors": [{"resource": "Issue","field": "title","code": "missing_field"}]}');
 
         $client = m::mock('GuzzleHttp\ClientInterface');
         $client->shouldReceive('send')
             ->times(1)
-            ->andReturn($postResponse);
+            ->andReturn($response);
         $this->provider->setHttpClient($client);
 
         $this->expectException(IdentityProviderException::class);
+        $this->expectExceptionMessage('Validation Failed');
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
     }
 
     public function testExceptionThrownWhenOAuthErrorReceived(): void
     {
-        $status = 200;
-        $postResponse = m::mock('Psr\Http\Message\ResponseInterface');
-        $postResponse->shouldReceive('getBody')->andReturn('{"error": "bad_verification_code","error_description": "The code passed is incorrect or expired.","error_uri": "https://developer.github.com/v4/oauth/#bad-verification-code"}');
-        $postResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
-        $postResponse->shouldReceive('getStatusCode')->andReturn($status);
+        $response = new Response(200, ['content-type' => 'json'], '{"error": "bad_verification_code","error_description": "The code passed is incorrect or expired.","error_uri": "https://developer.github.com/v4/oauth/#bad-verification-code"}');
 
         $client = m::mock('GuzzleHttp\ClientInterface');
         $client->shouldReceive('send')
             ->times(1)
-            ->andReturn($postResponse);
+            ->andReturn($response);
         $this->provider->setHttpClient($client);
 
         $this->expectException(IdentityProviderException::class);
+        $this->expectExceptionMessage('bad_verification_code');
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
     }
 }

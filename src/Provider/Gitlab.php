@@ -33,8 +33,7 @@ class Gitlab extends AbstractProvider
     public const DEFAULT_SCOPE = 'api';
     public const SCOPE_SEPARATOR = ' ';
 
-    /** @var string */
-    public $domain = 'https://gitlab.com';
+    public string $domain = 'https://gitlab.com';
 
     /**
      * Gitlab constructor.
@@ -96,7 +95,7 @@ class Gitlab extends AbstractProvider
      * @param ResponseInterface $response Parsed response data
      * @throws IdentityProviderException
      */
-    protected function checkResponse(ResponseInterface $response, $data)
+    protected function checkResponse(ResponseInterface $response, mixed $data): void
     {
         if ($response->getStatusCode() >= 400) {
             throw GitlabIdentityProviderException::clientException($response, $data);

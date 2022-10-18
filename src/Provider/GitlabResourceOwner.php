@@ -49,6 +49,8 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      * Returns an authenticated API client.
      *
      * Requires optional Gitlab API client to be installed.
+     *
+     * @infection-ignore-all
      */
     public function getApiClient(Builder $builder = null): Client
     {
