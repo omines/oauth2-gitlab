@@ -11,6 +11,7 @@
 namespace Omines\OAuth2\Client\Provider;
 
 use Gitlab\Client;
+use Gitlab\HttpClient\Builder;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
 
@@ -49,12 +50,12 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      *
      * Requires optional Gitlab API client to be installed.
      */
-    public function getApiClient(): Client
+    public function getApiClient(Builder $builder = null): Client
     {
         if (!class_exists('\\Gitlab\\Client')) {
             throw new \LogicException(__METHOD__ . ' requires package m4tthumphrey/php-gitlab-api to be installed and autoloaded'); // @codeCoverageIgnore
         }
-        $client = new Client();
+        $client = new Client($builder);
         $client->setUrl(rtrim($this->domain, '/') . self::PATH_API);
         $client->authenticate($this->token->getToken(), Client::AUTH_OAUTH_TOKEN);
 

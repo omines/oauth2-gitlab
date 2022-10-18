@@ -186,9 +186,21 @@ class GitlabTest extends TestCase
         $this->assertInstanceOf(\Gitlab\Client::class, $client);
     }
 
-    public function testExceptionThrownWhenErrorObjectReceived()
+    public function provideErrorCodes(): array
     {
-        $status = rand(400, 600);
+        return [
+            [400],
+            [404],
+            [500],
+            [rand(401, 600)],
+        ];
+    }
+
+    /**
+     * @dataProvider provideErrorCodes
+     */
+    public function testExceptionThrownWhenErrorObjectReceived(int $status)
+    {
         $postResponse = m::mock('Psr\Http\Message\ResponseInterface');
         $postResponse->shouldReceive('getBody')->andReturn('{"message": "Validation Failed","errors": [{"resource": "Issue","field": "title","code": "missing_field"}]}');
         $postResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
