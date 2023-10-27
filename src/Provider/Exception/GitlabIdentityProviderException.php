@@ -53,7 +53,7 @@ final class GitlabIdentityProviderException extends IdentityProviderException
      * @param ResponseInterface $response Response received from upstream
      * @param string|null $message        Parsed message
      */
-    protected static function fromResponse(ResponseInterface $response, ?string $message = null): IdentityProviderException
+    protected static function fromResponse(ResponseInterface $response, string $message = null): IdentityProviderException
     {
         return new self($message, $response->getStatusCode(), $response->getBody()->getContents());
     }

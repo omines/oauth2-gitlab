@@ -1,6 +1,7 @@
 /build
 /log
 /vendor
+/.idea
 .*.cache
 composer.phar
 composer.lock
