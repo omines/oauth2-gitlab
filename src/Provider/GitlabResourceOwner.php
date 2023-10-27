@@ -19,17 +19,23 @@ use League\OAuth2\Client\Token\AccessToken;
  * GitlabResourceOwner.
  *
  * @author Niels Keurentjes <niels.keurentjes@omines.com>
+ *
+ * @phpstan-type ResourceOwner array{id: int, is_admin: bool, name: string, username: string, email: string, avatar_url: string, web_url: string, state: string, external: bool}
  */
 class GitlabResourceOwner implements ResourceOwnerInterface
 {
     public const PATH_API = '/api/v4/';
 
+    /** @var ResourceOwner */
     private array $data;
+
     private string $domain;
     private AccessToken $token;
 
     /**
      * Creates new resource owner.
+     *
+     * @param ResourceOwner $response
      */
     public function __construct(array $response, AccessToken $token)
     {
@@ -42,7 +48,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function getId(): int
     {
-        return (int) $this->get('id');
+        return (int) ($this->data['id'] ?? 0);
     }
 
     /**
@@ -50,7 +56,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      *
      * Requires optional Gitlab API client to be installed.
      *
-     * @infection-ignore-all
+     * @infection-ignore-all Cannot be tested for infection due to external dependency
      */
     public function getApiClient(Builder $builder = null): Client
     {
@@ -81,7 +87,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function getName(): string
     {
-        return $this->get('name');
+        return $this->data['name'];
     }
 
     /**
@@ -89,7 +95,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function getUsername(): string
     {
-        return $this->get('username');
+        return $this->data['username'];
     }
 
     /**
@@ -97,7 +103,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function getEmail(): string
     {
-        return $this->get('email');
+        return $this->data['email'];
     }
 
     /**
@@ -105,7 +111,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function getAvatarUrl(): ?string
     {
-        return $this->get('avatar_url');
+        return $this->data['avatar_url'];
     }
 
     /**
@@ -113,7 +119,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function getProfileUrl(): ?string
     {
-        return $this->get('web_url');
+        return $this->data['web_url'];
     }
 
     public function getToken(): AccessToken
@@ -126,7 +132,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function isActive(): bool
     {
-        return 'active' === $this->get('state');
+        return 'active' === ($this->data['state'] ?? null);
     }
 
     /**
@@ -134,7 +140,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function isAdmin(): bool
     {
-        return $this->get('is_admin', false);
+        return $this->data['is_admin'] ?? false;
     }
 
     /**
@@ -142,19 +148,16 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      */
     public function isExternal(): bool
     {
-        return $this->get('external', true);
+        return $this->data['external'] ?? true;
     }
 
     /**
      * Return all of the owner details available as an array.
+     *
+     * @return ResourceOwner
      */
     public function toArray(): array
     {
         return $this->data;
-    }
-
-    protected function get(string $key, mixed $default = null): mixed
-    {
-        return $this->data[$key] ?? $default;
     }
 }

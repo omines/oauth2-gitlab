@@ -38,19 +38,27 @@ class GitlabTest extends TestCase
         parent::tearDown();
     }
 
+    private function createSelfhostedProvider(string $domain): Gitlab
+    {
+        return new Gitlab([
+            'domain' => $domain,
+            'clientId' => 'mock_client_id',
+            'clientSecret' => 'mock_secret',
+            'redirectUri' => 'none',
+        ]);
+    }
+
     public function testShorthandedSelfhostedConstructor(): void
     {
-        $provider = new Gitlab([
-            'domain' => 'https://gitlab.example.org',
-        ]);
-        $this->assertSame('https://gitlab.example.org', $provider->domain);
+        $provider = $this->createSelfhostedProvider('https://gitlab.example.org');
+        $this->assertSame('https://gitlab.example.org/oauth/authorize', $provider->getBaseAuthorizationUrl());
     }
 
     public function testAuthorizationUrl(): void
     {
         $url = $this->provider->getAuthorizationUrl();
         $uri = parse_url($url);
-        parse_str($uri['query'], $query);
+        parse_str($uri['query'] ?? '', $query);
 
         $this->assertArrayHasKey('client_id', $query);
         $this->assertArrayHasKey('redirect_uri', $query);
@@ -71,25 +79,25 @@ class GitlabTest extends TestCase
         $this->assertStringContainsString('&scope=api&', $this->provider->getAuthorizationUrl());
     }
 
-    public function testGetAuthorizationUrl()
+    public function testGetAuthorizationUrl(): void
     {
         $url = $this->provider->getAuthorizationUrl();
         $uri = parse_url($url);
 
-        $this->assertEquals('/oauth/authorize', $uri['path']);
+        $this->assertEquals('/oauth/authorize', $uri['path'] ?? 'error on parsing');
     }
 
-    public function testGetBaseAccessTokenUrl()
+    public function testGetBaseAccessTokenUrl(): void
     {
         $params = [];
 
         $url = $this->provider->getBaseAccessTokenUrl($params);
         $uri = parse_url($url);
 
-        $this->assertEquals('/oauth/token', $uri['path']);
+        $this->assertEquals('/oauth/token', $uri['path'] ?? 'error on parsing');
     }
 
-    public function testGetAccessToken()
+    public function testGetAccessToken(): void
     {
         $response = m::mock('Psr\Http\Message\ResponseInterface');
         $response->shouldReceive('getBody')->andReturn(Utils::streamFor('{"access_token":"mock_access_token", "scope":"repo,gist", "token_type":"bearer"}'));
@@ -109,9 +117,9 @@ class GitlabTest extends TestCase
         $this->assertNull($token->getResourceOwnerId());
     }
 
-    public function testSelfHostedGitlabDomainUrls()
+    public function testSelfHostedGitlabDomainUrls(): void
     {
-        $this->provider->domain = 'https://gitlab.company.com';
+        $provider = $this->createSelfhostedProvider('https://gitlab.company.com');
 
         $response = m::mock('Psr\Http\Message\ResponseInterface');
         $response->shouldReceive('getBody')->times(1)->andReturn(Utils::streamFor('access_token=mock_access_token&expires=3600&refresh_token=mock_refresh_token&otherKey={1234}'));
@@ -120,18 +128,18 @@ class GitlabTest extends TestCase
 
         $client = m::mock('GuzzleHttp\ClientInterface');
         $client->shouldReceive('send')->times(1)->andReturn($response);
-        $this->provider->setHttpClient($client);
+        $provider->setHttpClient($client);
 
-        $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
+        $token = $provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
 
         $this->assertInstanceOf(AccessToken::class, $token);
-        $this->assertEquals($this->provider->domain . '/oauth/authorize', $this->provider->getBaseAuthorizationUrl());
-        $this->assertEquals($this->provider->domain . '/oauth/token', $this->provider->getBaseAccessTokenUrl([]));
-        $this->assertEquals($this->provider->domain . '/api/v4/user', $this->provider->getResourceOwnerDetailsUrl($token));
-        // $this->assertEquals($this->provider->domain.'/api/v4/user/emails', $this->provider->urlUserEmails($token));
+        $this->assertEquals($provider->domain . '/oauth/authorize', $provider->getBaseAuthorizationUrl());
+        $this->assertEquals($provider->domain . '/oauth/token', $provider->getBaseAccessTokenUrl([]));
+        $this->assertEquals($provider->domain . '/api/v4/user', $provider->getResourceOwnerDetailsUrl($token));
+        // $this->assertEquals($provider->domain.'/api/v4/user/emails', $provider->urlUserEmails($token));
     }
 
-    public function testUserData()
+    public function testUserData(): GitlabResourceOwner
     {
         $userdata = [
             'id' => rand(1000, 9999),
@@ -142,7 +150,7 @@ class GitlabTest extends TestCase
             'web_url' => 'https://example.org/' . uniqid('web'),
             'state' => 'active',
             'is_admin' => true,
-            'external' => true,
+            'external' => false,
         ];
 
         $postResponse = m::mock('Psr\Http\Message\ResponseInterface');
@@ -166,24 +174,25 @@ class GitlabTest extends TestCase
         $user = $this->provider->getResourceOwner($token);
         $this->assertInstanceOf(GitlabResourceOwner::class, $user);
 
-        $this->assertSame($userdata, $user->toArray());
-        $this->assertEquals($userdata['id'], $user->getId());
-        $this->assertEquals($userdata['name'], $user->getName());
-        $this->assertEquals($userdata['username'], $user->getUsername());
-        $this->assertEquals($userdata['email'], $user->getEmail());
-        $this->assertEquals($userdata['avatar_url'], $user->getAvatarUrl());
-        $this->assertEquals($userdata['web_url'], $user->getProfileUrl());
-        $this->assertEquals('https://gitlab.com', $user->getDomain());
-        $this->assertEquals('mock_access_token', $user->getToken()->getToken());
+        $this->assertEquals($userdata, $user->toArray());
+        $this->assertSame($userdata['id'], $user->getId());
+        $this->assertSame($userdata['name'], $user->getName());
+        $this->assertSame($userdata['username'], $user->getUsername());
+        $this->assertSame($userdata['email'], $user->getEmail());
+        $this->assertSame($userdata['avatar_url'], $user->getAvatarUrl());
+        $this->assertSame($userdata['web_url'], $user->getProfileUrl());
+        $this->assertSame('https://gitlab.com', $user->getDomain());
+        $this->assertSame('mock_access_token', $user->getToken()->getToken());
         $this->assertTrue($user->isActive());
         $this->assertTrue($user->isAdmin());
-        $this->assertTrue($user->isExternal());
+        $this->assertFalse($user->isExternal());
 
         return $user;
     }
 
     public function testBuggyResourceOwner(): void
     {
+        /** @phpstan-ignore-next-line Violating type requirements on purpose */
         $owner = new GitlabResourceOwner([
             'id' => 'foo', // Should be an integer
             'is_admin' => 'bar', // Should be a bool
@@ -197,6 +206,7 @@ class GitlabTest extends TestCase
 
     public function testDefaultValuesForResourceOwner(): void
     {
+        /** @phpstan-ignore-next-line Violating type requirements on purpose */
         $owner = new GitlabResourceOwner([
         ], new AccessToken([
             'access_token' => 'foobar',
@@ -217,6 +227,9 @@ class GitlabTest extends TestCase
         $this->assertInstanceOf(\Gitlab\Client::class, $client);
     }
 
+    /**
+     * @return int[][]
+     */
     public function provideErrorCodes(): array
     {
         return [

@@ -22,29 +22,22 @@ use Psr\Http\Message\ResponseInterface;
  * Gitlab.
  *
  * @author Niels Keurentjes <niels.keurentjes@omines.com>
+ *
+ * @phpstan-import-type ResourceOwner from GitlabResourceOwner
  */
 class Gitlab extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
-    public const PATH_API_USER = '/api/v4/user';
-    public const PATH_AUTHORIZE = '/oauth/authorize';
-    public const PATH_TOKEN = '/oauth/token';
+    public const DEFAULT_DOMAIN = 'https://gitlab.com';
     public const DEFAULT_SCOPE = 'api';
     public const SCOPE_SEPARATOR = ' ';
 
-    public string $domain = 'https://gitlab.com';
+    private const PATH_API_USER = '/api/v4/user';
+    private const PATH_AUTHORIZE = '/oauth/authorize';
+    private const PATH_TOKEN = '/oauth/token';
 
-    /**
-     * Gitlab constructor.
-     */
-    public function __construct(array $options, array $collaborators = [])
-    {
-        if (isset($options['domain'])) {
-            $this->domain = $options['domain'];
-        }
-        parent::__construct($options, $collaborators);
-    }
+    public string $domain = self::DEFAULT_DOMAIN;
 
     /**
      * Get authorization url to begin OAuth flow.
@@ -56,6 +49,8 @@ class Gitlab extends AbstractProvider
 
     /**
      * Get access token url to retrieve token.
+     *
+     * @param mixed[] $params
      */
     public function getBaseAccessTokenUrl(array $params): string
     {
@@ -75,6 +70,8 @@ class Gitlab extends AbstractProvider
      * Current scopes are 'api', 'read_user', 'openid'.
      *
      * This returns an array with 'api' scope as default.
+     *
+     * @return string[]
      */
     protected function getDefaultScopes(): array
     {
@@ -93,6 +90,7 @@ class Gitlab extends AbstractProvider
      * Check a provider response for errors.
      *
      * @param ResponseInterface $response Parsed response data
+     * @param array<string, mixed> $data
      * @throws IdentityProviderException
      */
     protected function checkResponse(ResponseInterface $response, mixed $data): void
@@ -106,6 +104,8 @@ class Gitlab extends AbstractProvider
 
     /**
      * Generate a user object from a successful user details request.
+     *
+     * @param ResourceOwner $response
      */
     protected function createResourceOwner(array $response, AccessToken $token): ResourceOwnerInterface
     {
