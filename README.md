@@ -6,7 +6,7 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/omines/oauth2-gitlab.svg?style=flat-square)](https://scrutinizer-ci.com/g/omines/oauth2-gitlab)
 [![Total Downloads](https://img.shields.io/packagist/dt/omines/oauth2-gitlab.svg?style=flat-square)](https://packagist.org/packages/omines/oauth2-gitlab)
 
-This package provides GitLab OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client). GitLab 8.17 or later is required.
+This package provides GitLab OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
 ## Installation
 
@@ -98,16 +98,9 @@ $client->authenticate($token->getToken(), \Gitlab\Client::AUTH_OAUTH_TOKEN);
 ```
 Or call the `getApiClient` method on `GitlabResourceOwner` which does the same implicitly.
 
-## Testing
-
-```bash
-$ ./vendor/bin/phpunit
-```
-
 ## Contributing
 
 Please see [CONTRIBUTING](https://github.com/omines/oauth2-gitlab/blob/master/CONTRIBUTING.md) for details.
-
 
 ## Credits
 
