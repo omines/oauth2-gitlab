@@ -230,7 +230,7 @@ class GitlabTest extends TestCase
     /**
      * @return int[][]
      */
-    public function provideErrorCodes(): array
+    public static function provideErrorCodes(): array
     {
         return [
             [400],
