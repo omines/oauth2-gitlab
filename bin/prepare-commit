@@ -2,11 +2,11 @@
 set -e
 cd $(dirname $0)/..
 
-php-cs-fixer fix
+vendor/bin/php-cs-fixer fix
 vendor/bin/phpstan
 XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text
 
 [ ! -f "./infection.phar" ] && bin/install-infection
-./infection.phar --threads=4
+./infection.phar --threads=max
 
 echo "All good, ready for commit!"

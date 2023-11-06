@@ -90,15 +90,17 @@ class Gitlab extends AbstractProvider
      * Check a provider response for errors.
      *
      * @param ResponseInterface $response Parsed response data
-     * @param array<string, mixed> $data
+     * @param array{error?: string, message?: string}|mixed $data
      * @throws IdentityProviderException
      */
     protected function checkResponse(ResponseInterface $response, mixed $data): void
     {
-        if ($response->getStatusCode() >= 400) {
-            throw GitlabIdentityProviderException::clientException($response, $data);
+        if (!is_array($data)) {
+            throw GitlabIdentityProviderException::fromResponse($response, 'Corrupted response');
+        } elseif ($response->getStatusCode() >= 400) {
+            throw GitlabIdentityProviderException::fromResponse($response, $data['message'] ?? $response->getReasonPhrase());
         } elseif (isset($data['error'])) {
-            throw GitlabIdentityProviderException::oauthException($response, $data);
+            throw GitlabIdentityProviderException::fromResponse($response, $data['error']);
         }
     }
 

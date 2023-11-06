@@ -272,4 +272,19 @@ class GitlabTest extends TestCase
         $this->expectExceptionMessage('bad_verification_code');
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
     }
+
+    public function testExceptionThrownWhenUnknownErrorReceived(): void
+    {
+        $response = new Response(200, ['content-type' => 'json'], '684');
+
+        $client = m::mock('GuzzleHttp\ClientInterface');
+        $client->shouldReceive('send')
+            ->times(1)
+            ->andReturn($response);
+        $this->provider->setHttpClient($client);
+
+        $this->expectException(IdentityProviderException::class);
+        $this->expectExceptionMessage('Corrupted response');
+        $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
+    }
 }
