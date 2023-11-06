@@ -13,6 +13,7 @@
     },
     "logs": {
         "text": "log/infection.txt",
-        "perMutator": "log/mutators.md"
+        "perMutator": "log/mutators.md",
+        "stryker": { "report": "master" }
     }
 }

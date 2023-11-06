@@ -1,10 +1,10 @@
 # GitLab Provider for OAuth 2.0 Client
 [![Latest Version](https://img.shields.io/github/release/omines/oauth2-gitlab.svg?style=flat-square)](https://github.com/omines/oauth2-gitlab/releases)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/omines/oauth2-gitlab/master.svg?style=flat-square)](https://travis-ci.org/omines/oauth2-gitlab)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/omines/oauth2-gitlab.svg?style=flat-square)](https://scrutinizer-ci.com/g/omines/oauth2-gitlab/code-structure)
-[![Quality Score](https://img.shields.io/scrutinizer/g/omines/oauth2-gitlab.svg?style=flat-square)](https://scrutinizer-ci.com/g/omines/oauth2-gitlab)
 [![Total Downloads](https://img.shields.io/packagist/dt/omines/oauth2-gitlab.svg?style=flat-square)](https://packagist.org/packages/omines/oauth2-gitlab)
+[![test suite](https://github.com/omines/oauth2-gitlab/actions/workflows/ci.yaml/badge.svg)](https://github.com/omines/oauth2-gitlab/actions/workflows/ci.yaml)
+[![codecov](https://codecov.io/gh/omines/oauth2-gitlab/graph/badge.svg?token=sAqu9IFaYQ)](https://codecov.io/gh/omines/oauth2-gitlab)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fomines%2Foauth2-gitlab%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/omines/oauth2-gitlab/master)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 
 This package provides GitLab OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
