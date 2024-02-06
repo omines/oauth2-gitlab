@@ -58,7 +58,7 @@ class GitlabResourceOwner implements ResourceOwnerInterface
      *
      * @infection-ignore-all Cannot be tested for infection due to external dependency
      */
-    public function getApiClient(Builder $builder = null): Client
+    public function getApiClient(?Builder $builder = null): Client
     {
         if (!class_exists('\\Gitlab\\Client')) {
             throw new \LogicException(__METHOD__ . ' requires package m4tthumphrey/php-gitlab-api to be installed and autoloaded'); // @codeCoverageIgnore
