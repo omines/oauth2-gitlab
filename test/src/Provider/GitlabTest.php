@@ -66,7 +66,7 @@ class GitlabTest extends TestCase
         $this->assertArrayHasKey('scope', $query);
         $this->assertArrayHasKey('response_type', $query);
         $this->assertArrayHasKey('approval_prompt', $query);
-        $this->assertNotNull($this->provider->getState());
+        $this->assertNotEmpty($this->provider->getState());
     }
 
     public function testScopes(): void
@@ -224,7 +224,8 @@ class GitlabTest extends TestCase
     public function testApiClient(GitlabResourceOwner $owner): void
     {
         $client = $owner->getApiClient();
-        $this->assertInstanceOf(\Gitlab\Client::class, $client);
+
+        $this->assertSame(\Gitlab\Client::class, get_class($client));
     }
 
     /**
