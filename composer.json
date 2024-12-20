@@ -19,6 +19,8 @@
     ],
     "require": {
         "php": ">=8.1",
+        "ext-mbstring": "*",
+        "ext-intl": "*",
         "league/oauth2-client": "^2.4.1"
     },
     "require-dev": {

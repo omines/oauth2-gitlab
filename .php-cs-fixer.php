@@ -17,14 +17,13 @@ $finder = PhpCsFixer\Finder::create()
 
 $config = new PhpCsFixer\Config();
 return $config
-    ->setRiskyAllowed(true)
+    // ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
-        'array_syntax' => ['syntax' => 'short'],
         'concat_space' => ['spacing' => 'one'],
         'header_comment' => ['header' => $header, 'location' => 'after_open'],
 
-        'mb_str_functions' => true,
+    //    'mb_str_functions' => true,
         'ordered_imports' => true,
         'phpdoc_align' => false,
         'phpdoc_separation' => false,
