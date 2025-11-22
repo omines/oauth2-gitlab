@@ -17,6 +17,8 @@ use League\OAuth2\Client\Token\AccessToken;
 use Mockery as m;
 use Omines\OAuth2\Client\Provider\Gitlab;
 use Omines\OAuth2\Client\Provider\GitlabResourceOwner;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class GitlabTest extends TestCase
@@ -218,9 +220,7 @@ class GitlabTest extends TestCase
         $this->assertTrue($owner->isExternal());
     }
 
-    /**
-     * @depends testUserData
-     */
+    #[Depends('testUserData')]
     public function testApiClient(GitlabResourceOwner $owner): void
     {
         $client = $owner->getApiClient();
@@ -241,9 +241,7 @@ class GitlabTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideErrorCodes
-     */
+    #[DataProvider('provideErrorCodes')]
     public function testExceptionThrownWhenErrorObjectReceived(int $status): void
     {
         $response = new Response($status, ['content-type' => 'json'], '{"message": "Validation Failed","errors": [{"resource": "Issue","field": "title","code": "missing_field"}]}');

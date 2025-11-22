@@ -20,11 +20,11 @@ use League\OAuth2\Client\Token\AccessToken;
  *
  * @author Niels Keurentjes <niels.keurentjes@omines.com>
  *
- * @phpstan-type ResourceOwner array{id: int, is_admin: bool, name: string, username: string, email: string, avatar_url: string, web_url: string, state: string, external: bool}
+ * @phpstan-type ResourceOwner array{id: ?int, is_admin: ?bool, name: string, username: string, email: string, avatar_url: string, web_url: string, state: ?string, external: ?bool}
  */
 class GitlabResourceOwner implements ResourceOwnerInterface
 {
-    public const PATH_API = '/api/v4/';
+    public const string PATH_API = '/api/v4/';
 
     /** @var ResourceOwner */
     private array $data;
