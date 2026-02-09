@@ -24,18 +24,18 @@
         "league/oauth2-client": "^2.4.1"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.90.0",
+        "friendsofphp/php-cs-fixer": "^3.93.1",
         "guzzlehttp/psr7": "^2.8.0",
-        "http-interop/http-factory-guzzle": "^1.2",
-        "infection/infection": "^0.31.9",
+        "http-interop/http-factory-guzzle": "^1.2.1",
+        "infection/infection": "^0.32.4",
         "m4tthumphrey/php-gitlab-api": "^11.14|^12.0",
         "mockery/mockery": "^1.6.12",
         "php-http/guzzle7-adapter": "^1.1.0",
         "phpstan/extension-installer": "^1.4.3",
-        "phpstan/phpstan": "^2.1.32",
+        "phpstan/phpstan": "^2.1.38",
         "phpstan/phpstan-mockery": "^2.0.0",
-        "phpstan/phpstan-phpunit": "^2.0.8",
-        "phpunit/phpunit": "^12.4.4"
+        "phpstan/phpstan-phpunit": "^2.0.13",
+        "phpunit/phpunit": "^12.5.10|^13.0.1"
     },
     "suggest": {
         "m4tthumphrey/php-gitlab-api": "For further API usage using the acquired OAuth2 token"
