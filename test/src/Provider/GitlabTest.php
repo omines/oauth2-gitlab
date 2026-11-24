@@ -154,6 +154,7 @@ class GitlabTest extends TestCase
             'is_admin' => true,
             'external' => false,
         ];
+        $this->assertIsString($userdataJson = json_encode($userdata));
 
         $postResponse = m::mock('Psr\Http\Message\ResponseInterface');
         $postResponse->shouldReceive('getBody')->andReturn(Utils::streamFor('access_token=mock_access_token&expires=3600&refresh_token=mock_refresh_token&otherKey={1234}'));
@@ -161,7 +162,7 @@ class GitlabTest extends TestCase
         $postResponse->shouldReceive('getStatusCode')->andReturn(200);
 
         $userResponse = m::mock('Psr\Http\Message\ResponseInterface');
-        $userResponse->shouldReceive('getBody')->andReturn(Utils::streamFor(json_encode($userdata)));
+        $userResponse->shouldReceive('getBody')->andReturn(Utils::streamFor($userdataJson));
         $userResponse->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
         $userResponse->shouldReceive('getStatusCode')->andReturn(200);
 
